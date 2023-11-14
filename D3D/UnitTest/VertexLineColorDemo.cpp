@@ -45,7 +45,13 @@ void VertexLineColorDemo::Render()
 	static int pass = 0;
 	ImGui::InputInt("Pass", &pass);
 
-	pass %= 4;
+	static Color color;
+	ImGui::ColorEdit3("Color", color);
+
+	shader->AsVector("BaseColor")->SetFloatVector(color);
+
+	pass = Math::Clamp(pass, 0, 4);
+	//pass %= 5;
 
 	shader->Draw(0, pass, 2);
 }
