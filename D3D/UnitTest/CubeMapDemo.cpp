@@ -9,6 +9,8 @@ void CubeMapDemo::Initialize()
 
 	shader = new Shader(L"11_Mesh.fxo");
 
+	sky = new CubeSky(L"Environment/SnowCube1024.dds");
+
 	CreateMesh();
 
 	cubeMapShader = new Shader(L"12_CubeMap.fxo");
@@ -24,6 +26,7 @@ void CubeMapDemo::Destroy()
 	SafeDelete(quad);
 	SafeDelete(plane);
 	SafeDelete(cube);
+	SafeDelete(sky);
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -41,6 +44,15 @@ void CubeMapDemo::Update()
 	ImGui::SliderFloat3("Light Direction", lightDirection, -1, 1);
 	shader->AsVector("LightDirection")->SetFloatVector(lightDirection);
 
+	// CubeSky Pass Test
+	{
+		static UINT pass = sky->GetShader()->PassCount() - 1;
+		ImGui::InputInt("Pass", (int*)&pass);
+		pass %= sky->GetShader()->PassCount();
+		sky->Pass(pass);
+	}
+
+	sky->Update();
 	quad->Update();
 	plane->Update();
 	cube->Update();
@@ -75,6 +87,7 @@ void CubeMapDemo::Render()
 	}
 	
 
+	sky->Render();
 	quad->Render();
 	plane->Render();
 	cube->Render();
