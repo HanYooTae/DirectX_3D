@@ -29,10 +29,10 @@ float4 WorldPosition(float4 position)
 
 float4 ViewProjection(float4 position)
 {
-    //return mul(position, VP); //<- Perframe 클래스 작성해야 동작함
+    return mul(position, VP); //<- Perframe 클래스 작성해야 동작함
 
-    position = mul(position, View);
-    return mul(position, Projection);
+    //position = mul(position, View);
+    //return mul(position, Projection);
 }
 
 float3 WorldNormal(float3 normal)
