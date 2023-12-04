@@ -173,3 +173,5 @@ void Converter::WriteMeshData(wstring savePath)
 
 	SafeDelete(w);
 }
+
+
