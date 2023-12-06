@@ -6,7 +6,7 @@
 #include "VertexLineColorDemo.h"
 #include "VertexTopologyDemo.h"
 #include "PolygonDemo.h"
-#include "PlainDemo.h"
+#include "PlaneDemo.h"
 #include "WorldDemo.h"
 #include "IndexBufferDemo.h"
 #include "GridDemo.h"

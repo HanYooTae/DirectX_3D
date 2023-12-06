@@ -3,17 +3,17 @@
 class Mesh : public Renderer
 {
 public:
-    Mesh(Shader* shader);
-    virtual ~Mesh();
+	Mesh(Shader* shader);
+	virtual ~Mesh();
 
-    void Update();
-    void Render();
+	void Update();
+	void Render();
 
 public:
-    void DiffuseMap(wstring path);
+	void DiffuseMap(wstring path);
 
 protected:
-    virtual void Create() = 0;
+	virtual void Create() = 0;
 
 protected:
 	struct VertexMesh
@@ -22,33 +22,34 @@ protected:
 		Vector2 Uv;
 		Vector3 Normal;
 
-        VertexMesh()
-        {
-            Position = Vector3(0, 0, 0);
-            Uv = Vector2(0, 0);
-            Normal = Vector3(0, 0, 0);
-        }
+		VertexMesh()
+		{
+			Position = Vector3(0, 0, 0);
+			Uv = Vector2(0, 0);
+			Normal = Vector3(0, 0, 0);
+		}
 
-        VertexMesh(float x, float y, float z, float u, float v, float nx, float ny, float nz)
-        {
-            Position = Vector3(x, y, z);
-            Uv = Vector2(u, v);
-            Normal = Vector3(nx, ny, nz);
-        }
+		VertexMesh(float x, float y, float z, float u, float v, float nx, float ny, float nz)
+		{
+			Position = Vector3(x, y, z);
+			Uv = Vector2(u, v);
+			Normal = Vector3(nx, ny, nz);
+		}
 
-        VertexMesh(Vector3 position, Vector2 uv, Vector3 normal)
-        {
-            Position = position;
-            Uv = uv;
-            Normal = normal;
-        }
+		VertexMesh(Vector3 position, Vector2 uv, Vector3 normal)
+		{
+			Position = position;
+			Uv = uv;
+			Normal = normal;
+		}
 	};
 
 protected:
-    VertexMesh* vertices = nullptr;
-    UINT* indices = nullptr;
+	VertexMesh* vertices = nullptr;
+	UINT* indices = nullptr;
 
 private:
-    Texture* diffuseMap = nullptr;
-    ID3DX11EffectShaderResourceVariable* sDiffuseMap;
+	Texture* diffuseMap = nullptr;
+	ID3DX11EffectShaderResourceVariable* sDiffuseMap;
+
 };

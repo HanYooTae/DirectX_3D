@@ -5,7 +5,7 @@ void PolygonDemo::Initialize()
 {
 	shader = new Shader(L"02_Pass.fxo");
 
-	// Polygon1
+	//Polygon - 1
 	{
 		vertices[0].Position = Vector3(-0.5f, +0.0f, +0.0f);
 		vertices[1].Position = Vector3(+0.0f, +0.5f, +0.0f);
@@ -19,13 +19,10 @@ void PolygonDemo::Initialize()
 		D3D11_SUBRESOURCE_DATA subResource = { 0 };
 		subResource.pSysMem = vertices;
 
-		//HRESULT result = D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer);
-		//// S_OK가 아니라면 터짐
-		//assert(SUCCEEDED(result));
 		Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer));
 	}
 
-	// Polygon2
+	//Polygon - 2
 	{
 		vertices2[0].Position = Vector3(-0.5f, +0.0f - 0.5f, +0.0f);
 		vertices2[1].Position = Vector3(+0.0f, +0.5f - 0.5f, +0.0f);
@@ -39,18 +36,15 @@ void PolygonDemo::Initialize()
 		D3D11_SUBRESOURCE_DATA subResource = { 0 };
 		subResource.pSysMem = vertices2;
 
-		//HRESULT result = D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer);
-		//// S_OK가 아니라면 터짐
-		//assert(SUCCEEDED(result));
 		Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer2));
 	}
 }
 
 void PolygonDemo::Destroy()
 {
-	SafeRelease(vertexBuffer2);
-	SafeRelease(vertexBuffer);
 	SafeDelete(shader);
+	SafeRelease(vertexBuffer);
+	SafeRelease(vertexBuffer2);
 }
 
 void PolygonDemo::Update()
@@ -59,17 +53,12 @@ void PolygonDemo::Update()
 
 void PolygonDemo::Render()
 {
-	// 1번 polygon
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
 	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 	D3D::GetDC()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	shader->Draw(0, 0, 3);
 
-	// 2번 polygon
-	//UINT stride = sizeof(Vertex);
-	//UINT offset = 0;
 	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer2, &stride, &offset);
-	//D3D::GetDC()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	shader->Draw(0, 1, 3);
 }

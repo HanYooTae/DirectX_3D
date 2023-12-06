@@ -110,31 +110,34 @@
     <ClCompile Include="Model\ModelMesh.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="Model\ModelRender.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
-      <UniqueIdentifier>{94289a87-fbc9-4a9c-8f87-9de29e66bc44}</UniqueIdentifier>
+      <UniqueIdentifier>{77611a15-f6b5-4ed4-9bd4-df273ced35b9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Systems">
-      <UniqueIdentifier>{02a104b7-906c-4e1a-9c99-e04b4eab286b}</UniqueIdentifier>
+      <UniqueIdentifier>{d88a3e54-3760-4025-bbe0-bdc8a098af54}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utilities">
-      <UniqueIdentifier>{61b043b8-fe91-4a92-8b79-aca831f6b040}</UniqueIdentifier>
+      <UniqueIdentifier>{057b17ac-f128-4241-84dd-29f5417c6827}</UniqueIdentifier>
     </Filter>
     <Filter Include="Viewer">
-      <UniqueIdentifier>{f58658a2-0f04-4848-a306-ee3443cb6504}</UniqueIdentifier>
+      <UniqueIdentifier>{ec8269a0-9018-45a5-8c46-7bfeb68c4c3d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Environment">
-      <UniqueIdentifier>{73ca054a-64b3-4a72-9fbb-8b7f3b17badb}</UniqueIdentifier>
+      <UniqueIdentifier>{50007ca3-ceac-4cd7-a31f-eb51e1e95e07}</UniqueIdentifier>
     </Filter>
     <Filter Include="Meshes">
-      <UniqueIdentifier>{5ac8eb25-3c4d-4c65-beb9-9f8ea52986a5}</UniqueIdentifier>
+      <UniqueIdentifier>{9a5bae92-0de5-4ed4-b386-9307706f9d34}</UniqueIdentifier>
     </Filter>
     <Filter Include="Objects">
-      <UniqueIdentifier>{d64de3ed-6dce-4bd0-b84a-5e95034b5839}</UniqueIdentifier>
+      <UniqueIdentifier>{2db3c3ff-5312-478a-81b2-4bd1dd07093c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Model">
-      <UniqueIdentifier>{e05a2697-19c7-4299-9c54-b51edb0d241f}</UniqueIdentifier>
+      <UniqueIdentifier>{0d5bf85d-d50c-4476-8fe1-e030f5459e5b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +251,9 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Model\ModelMesh.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelRender.h">
       <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>

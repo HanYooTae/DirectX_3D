@@ -31,22 +31,14 @@ Context::Context()
 	perspective = new Perspective(desc.Width, desc.Height);
 	viewport = new Viewport(desc.Width, desc.Height);
 
-
-	//position = D3DXVECTOR3(0, 0, -10);
-	//D3DXVECTOR3 forward(0, 0, 1);
-	//D3DXVECTOR3 right(1, 0, 0);
-	//D3DXVECTOR3 up(0, 1, 0);
-	//
-	//// 상대적인 위치
-	//D3DXMatrixLookAtLH(&view, &position, &(position + forward), &up);
 	camera = new Freedom();
 }
 
 Context::~Context()
 {
-	SafeDelete(camera);
-	SafeDelete(viewport);
 	SafeDelete(perspective);
+	SafeDelete(viewport);
+	SafeDelete(camera);
 }
 
 void Context::ResizeScreen()
@@ -57,15 +49,6 @@ void Context::ResizeScreen()
 
 void Context::Update()
 {
-	/*ImGui::SliderFloat("Eye X", &position.x, 0, 128);
-	ImGui::SliderFloat("Eye Y", &position.y, -20, 20);
-	ImGui::SliderFloat("Eye Z", &position.z, -118, 118);
-
-	D3DXVECTOR3 forward(0, 0, 1);
-	D3DXVECTOR3 right(1, 0, 0);
-	D3DXVECTOR3 up(0, 1, 0);
-
-	D3DXMatrixLookAtLH(&view, &position, &(position + forward), &up);*/
 	camera->Update();
 }
 
@@ -77,28 +60,18 @@ void Context::Render()
 	camera->Position(&viewPosition);
 
 	Vector3 viewRotation;
-	camera->RotationDegrees(&viewRotation);
+	camera->RotationDegree(&viewRotation);
 
 	string str;
-
 	str = "FPS : " + to_string(ImGui::GetIO().Framerate);
+	Gui::Get()->RenderText(Vector2(5, 5), Color(1, 0, 0, 1), str);
 
-	Gui::Get()->RenderText(Vector2(5, 5), Color(1, 1, 1, 1), str);
-
-	str = "Camera Position : ";
-	str +=
-		to_string(viewPosition.x) + ", " +
-		to_string(viewPosition.y) + ", " +
-		to_string(viewPosition.z);
-
+	str = "Camera(P) : ";
+	str += to_string(viewPosition.x) + ", " + to_string(viewPosition.y) + ", " + to_string(viewPosition.z);
 	Gui::Get()->RenderText(Vector2(5, 20), Color(1, 1, 1, 1), str);
 
-	str = "Camera Rotation : ";
-	str +=
-		to_string(viewRotation.x) + ", " +
-		to_string(viewRotation.y) + ", " +
-		to_string(viewRotation.z);
-
+	str = "Camera(R) : ";
+	str += to_string(viewRotation.x) + ", " + to_string(viewRotation.y) + ", " + to_string(viewRotation.z);
 	Gui::Get()->RenderText(Vector2(5, 35), Color(1, 1, 1, 1), str);
 }
 
@@ -106,6 +79,7 @@ D3DXMATRIX Context::View()
 {
 	Matrix view;
 	camera->GetMatrix(&view);
+	
 	return view;
 }
 

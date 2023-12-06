@@ -31,7 +31,5 @@ private:
 	class Perspective* perspective;
 	class Viewport* viewport;
 
-	/*D3DXVECTOR3 position;
-	D3DXMATRIX view;*/
 	Camera* camera;
 };

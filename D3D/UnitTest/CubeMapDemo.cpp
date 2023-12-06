@@ -3,7 +3,7 @@
 
 void CubeMapDemo::Initialize()
 {
-	Context::Get()->GetCamera()->RotationDegrees(20, 0, 0);
+	Context::Get()->GetCamera()->RotationDegree(20, 0, 0);
 	Context::Get()->GetCamera()->Position(1, 36, -85);
 	((Freedom*)Context::Get()->GetCamera())->Speed(50, 2);
 
@@ -15,7 +15,7 @@ void CubeMapDemo::Initialize()
 
 	cubeMapShader = new Shader(L"12_CubeMap.fxo");
 	cubeMap = new CubeMap(cubeMapShader);
-	cubeMap->Texture(L"Environment/SnowCube1024.dds");
+	cubeMap->Texture(L"Environment/Mountain1024.dds");
 	cubeMap->GetTransform()->Position(0, 20, 0);
 	cubeMap->GetTransform()->Scale(10, 10, 10);
 }
@@ -26,16 +26,18 @@ void CubeMapDemo::Destroy()
 	SafeDelete(quad);
 	SafeDelete(plane);
 	SafeDelete(cube);
-	SafeDelete(sky);
 
 	for (int i = 0; i < 10; i++)
-	{
 		SafeDelete(cylinders[i]);
+
+	for (int i = 0; i < 10; i++)
 		SafeDelete(spheres[i]);
 
-	}
 	SafeDelete(cubeMapShader);
 	SafeDelete(cubeMap);
+
+	SafeDelete(sky);
+
 }
 
 void CubeMapDemo::Update()
@@ -44,7 +46,7 @@ void CubeMapDemo::Update()
 	ImGui::SliderFloat3("Light Direction", lightDirection, -1, 1);
 	shader->AsVector("LightDirection")->SetFloatVector(lightDirection);
 
-	// CubeSky Pass Test
+	//CubeSky Pass Test
 	{
 		static UINT pass = sky->GetShader()->PassCount() - 1;
 		ImGui::InputInt("Pass", (int*)&pass);
@@ -53,6 +55,7 @@ void CubeMapDemo::Update()
 	}
 
 	sky->Update();
+
 	quad->Update();
 	plane->Update();
 	cube->Update();
@@ -61,7 +64,6 @@ void CubeMapDemo::Update()
 	{
 		cylinders[i]->Update();
 		spheres[i]->Update();
-
 	}
 
 	cubeMap->Update();
@@ -69,7 +71,7 @@ void CubeMapDemo::Update()
 
 void CubeMapDemo::Render()
 {
-	// WireFame Test
+	//WireFrame Test
 	{
 		static bool bWireFrame = false;
 		ImGui::Checkbox("WireFrame", &bWireFrame);
@@ -82,12 +84,11 @@ void CubeMapDemo::Render()
 		{
 			cylinders[i]->Pass(bWireFrame == true ? 1 : 0);
 			spheres[i]->Pass(bWireFrame == true ? 1 : 0);
-
 		}
 	}
-	
 
 	sky->Render();
+
 	quad->Render();
 	plane->Render();
 	cube->Render();
@@ -105,12 +106,10 @@ void CubeMapDemo::CreateMesh()
 {
 	quad = new MeshQuad(shader);
 	quad->DiffuseMap(L"Box.png");
-	//quad->Pass(1);
 
 	plane = new MeshPlane(shader, 2.5f, 2.5f);
 	plane->GetTransform()->Scale(12, 1, 12);
 	plane->DiffuseMap(L"Floor.png");
-	//plane->Pass(1);
 
 	cube = new MeshCube(shader);
 	cube->GetTransform()->Position(0, 5, 0);
@@ -120,21 +119,21 @@ void CubeMapDemo::CreateMesh()
 	for (int i = 0; i < 5; i++)
 	{
 		cylinders[i * 2 + 0] = new MeshCylinder(shader, 0.3f, 0.5f, 3.f, 20, 20);
-		cylinders[i * 2 + 0]->GetTransform()->Position(-30, 6.f, (float)i * 15.f - 15.f);
+		cylinders[i * 2 + 0]->GetTransform()->Position(-30, 6, (float)i * 15.f - 15.f);
 		cylinders[i * 2 + 0]->GetTransform()->Scale(5, 5, 5);
 		cylinders[i * 2 + 0]->DiffuseMap(L"Bricks.png");
 
 		cylinders[i * 2 + 1] = new MeshCylinder(shader, 0.3f, 0.5f, 3.f, 20, 20);
-		cylinders[i * 2 + 1]->GetTransform()->Position(+30, 6.f, (float)i * 15.f - 15.f);
+		cylinders[i * 2 + 1]->GetTransform()->Position(+30, 6, (float)i * 15.f - 15.f);
 		cylinders[i * 2 + 1]->GetTransform()->Scale(5, 5, 5);
 		cylinders[i * 2 + 1]->DiffuseMap(L"Bricks.png");
 
-		spheres[i * 2 + 0] = new MeshSphere(shader, 0.5f, 20, 20);
+		spheres[i * 2 + 0] = new MeshSphere(shader, 0.5f);
 		spheres[i * 2 + 0]->GetTransform()->Position(-30, 15.5f, (float)i * 15.f - 15.f);
 		spheres[i * 2 + 0]->GetTransform()->Scale(5, 5, 5);
 		spheres[i * 2 + 0]->DiffuseMap(L"Wall.png");
-		
-		spheres[i * 2 + 1] = new MeshSphere(shader, 0.5f, 20, 20);
+
+		spheres[i * 2 + 1] = new MeshSphere(shader, 0.5f);
 		spheres[i * 2 + 1]->GetTransform()->Position(+30, 15.5f, (float)i * 15.f - 15.f);
 		spheres[i * 2 + 1]->GetTransform()->Scale(5, 5, 5);
 		spheres[i * 2 + 1]->DiffuseMap(L"Wall.png");

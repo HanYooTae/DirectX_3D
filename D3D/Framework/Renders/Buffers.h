@@ -1,7 +1,7 @@
 #pragma once
 
 //-----------------------------------------------------------------------------
-//  VertexBuffer
+// VertexBuffer
 //-----------------------------------------------------------------------------
 class VertexBuffer
 {
@@ -11,7 +11,7 @@ public:
 
 	UINT Count() { return count; }
 	UINT Stride() { return stride; }
-	ID3D11Buffer* Buffer() { return buffer; }
+	ID3D11Buffer* Buffer() { return  buffer; }
 
 	void Render();
 
@@ -27,9 +27,8 @@ private:
 	bool bGpuWrite;
 };
 
-
 //-----------------------------------------------------------------------------
-//  IndexBuffer
+// IndexBuffer
 //-----------------------------------------------------------------------------
 class IndexBuffer
 {
@@ -50,7 +49,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-//  ConstantBuffer
+// ConstantBuffer
 //-----------------------------------------------------------------------------
 class ConstantBuffer
 {
@@ -60,7 +59,7 @@ public:
 
 	ID3D11Buffer* Buffer() { return buffer; }
 
-	void Render();	// UpdateSubResource gpu 쓰기권한X cpu 쓰기권한 O
+	void Render();
 
 private:
 	ID3D11Buffer* buffer;

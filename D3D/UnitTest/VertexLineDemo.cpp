@@ -12,13 +12,10 @@ void VertexLineDemo::Initialize()
 	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
 	desc.ByteWidth = sizeof(Vertex) * 2;
 	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
+	
 	D3D11_SUBRESOURCE_DATA subResource;
 	subResource.pSysMem = vertices;
 
-	//HRESULT result = D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer);
-	//// S_OK가 아니라면 터짐
-	//assert(SUCCEEDED(result));
 	Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer));
 }
 

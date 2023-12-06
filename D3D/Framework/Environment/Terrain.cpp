@@ -2,14 +2,14 @@
 #include "Terrain.h"
 
 Terrain::Terrain(Shader* shader, wstring heightMapPath)
-	:Renderer(shader)
+	: Renderer(shader)
 {
 	heightMap = new Texture(heightMapPath);
 
 	CreateVertexData();
 	CreateIndexData();
 	CreateNormalData();
-
+	
 	vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexTerrain));
 	indexBuffer = new IndexBuffer(indices, indexCount);
 }
@@ -20,7 +20,6 @@ Terrain::~Terrain()
 	SafeDeleteArray(indices);
 
 	SafeDelete(heightMap);
-
 }
 
 void Terrain::Update()
@@ -44,7 +43,7 @@ void Terrain::VisibleNormal()
 {
 	static bool bVisibleNormal = false;
 	static int interval = 3;
-	ImGui::Checkbox("Visible Normal", &bVisibleNormal);
+	ImGui::Checkbox("Visble Normal", &bVisibleNormal);
 	ImGui::SliderInt("Interval", &interval, 1, 5);
 
 	if (bVisibleNormal)
@@ -138,7 +137,7 @@ void Terrain::CreateNormalData()
 		Vector3 normal;
 		D3DXVec3Cross(&normal, &e1, &e2);
 		D3DXVec3Normalize(&normal, &normal);
-
+		
 		vertices[index0].Normal += normal;
 		vertices[index1].Normal += normal;
 		vertices[index2].Normal += normal;
@@ -146,5 +145,5 @@ void Terrain::CreateNormalData()
 
 	for (UINT i = 0; i < vertexCount; i++)
 		D3DXVec3Normalize(&vertices[i].Normal, &vertices[i].Normal);
-
 }
+

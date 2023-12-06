@@ -17,7 +17,7 @@ private:
 
 private:
 	Shader* shader = nullptr;
-
+	
 	MeshQuad* quad = nullptr;
 	MeshPlane* plane = nullptr;
 

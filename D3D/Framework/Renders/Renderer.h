@@ -6,7 +6,7 @@ public:
 	Renderer(Shader* shader);
 	Renderer(wstring shaderFile);
 	virtual ~Renderer();
-
+	
 	Shader* GetShader() { return shader; }
 
 	UINT& Pass() { return pass; }

@@ -192,7 +192,6 @@ void Window::MainRender()
 	Context::Get()->Update();
 	DebugLine::Get()->Update();
 
-
 	mainExecute->Update();
 
 	mainExecute->PreRender();

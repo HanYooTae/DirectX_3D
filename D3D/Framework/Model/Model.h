@@ -16,12 +16,22 @@ private:
 	~Model();
 
 private:
-	// *.mesh 파일 읽어오기
+	//*.mesh 파일 읽어오기
 	void ReadMesh(wstring file);
 
 private:
-	void BindBone();	// Make Bone Tree
-	void BindMesh();	// (1) meshes[i]->Binding() 호출, (2) boneIndex를 Set
+	void BindBone(); //Make Bone Tree
+	void BindMesh(); //(1)meshes[i]->Binding() 호출, (2) boneIndex를 Set
+
+public:
+	UINT BoneCount() { return bones.size(); }
+	vector<ModelBone*>& Bones() { return bones; }
+	ModelBone* BoneByIndex(UINT index) { return bones[index]; }
+	ModelBone* BoneByName(wstring name);
+
+	UINT MeshCount() { return meshes.size(); }
+	vector<ModelMesh*>& Meshes() { return meshes; }
+	ModelMesh* MeshByIndex(UINT index) { return meshes[index]; }
 
 public:
 	struct VertexModel

@@ -12,6 +12,7 @@ CubeMap::CubeMap(Shader* shader)
 CubeMap::~CubeMap()
 {
 	SafeDelete(mesh);
+
 	SafeRelease(srv);
 }
 
@@ -47,3 +48,4 @@ void CubeMap::Pass(UINT val)
 {
 	mesh->Pass(val);
 }
+

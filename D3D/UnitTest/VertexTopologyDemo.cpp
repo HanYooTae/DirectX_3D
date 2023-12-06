@@ -5,15 +5,15 @@ void VertexTopologyDemo::Initialize()
 {
 	shader = new Shader(L"01_Line.fxo");
 
-	// Line - 0
+	//Line - 0
 	vertices[0].Position = Vector3(0, 0, 0);
 	vertices[1].Position = Vector3(1, 0, 0);
 
-	// Line - 1
+	//Line - 1
 	vertices[2].Position = Vector3(0, 0.5f, 0);
 	vertices[3].Position = Vector3(1, 0.5f, 0);
 
-	// Line - 2
+	//Line - 2
 	vertices[4].Position = Vector3(0, -0.5f, 0);
 	vertices[5].Position = Vector3(1, -0.5f, 0);
 
@@ -21,13 +21,10 @@ void VertexTopologyDemo::Initialize()
 	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
 	desc.ByteWidth = sizeof(Vertex) * 6;
 	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
+	
 	D3D11_SUBRESOURCE_DATA subResource;
 	subResource.pSysMem = vertices;
 
-	//HRESULT result = D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer);
-	//// S_OK가 아니라면 터짐
-	//assert(SUCCEEDED(result));
 	Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer));
 }
 
@@ -50,13 +47,14 @@ void VertexTopologyDemo::Render()
 	static bool bStrip;
 	ImGui::Checkbox("Strip", &bStrip);
 
-	D3D_PRIMITIVE_TOPOLOGY topologies[] =
+	D3D11_PRIMITIVE_TOPOLOGY topologies[] = 
 	{
 		D3D_PRIMITIVE_TOPOLOGY_LINELIST,
 		D3D_PRIMITIVE_TOPOLOGY_LINESTRIP,
 	};
 
 	D3D::GetDC()->IASetPrimitiveTopology(bStrip ? topologies[1] : topologies[0]);
+
 
 	static UINT startLocation;
 	ImGui::SliderInt("Start Location", (int*)&startLocation, 0, 6);

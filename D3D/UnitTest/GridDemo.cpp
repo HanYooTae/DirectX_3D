@@ -8,7 +8,7 @@ void GridDemo::Initialize()
 	vertexCount = (width + 1) * (height + 1);
 	vertices = new Vertex[vertexCount];
 
-	for (UINT y = 0; y <= height; y++)
+	for (UINT y = 0 ; y <= height; y++)
 	{
 		for (UINT x = 0; x <= width; x++)
 		{
@@ -68,9 +68,13 @@ void GridDemo::Initialize()
 
 void GridDemo::Destroy()
 {
-	SafeRelease(indexBuffer);
-	SafeRelease(vertexBuffer);
 	SafeDelete(shader);
+
+	SafeRelease(vertexBuffer);
+	SafeRelease(indexBuffer);
+
+	SafeDeleteArray(vertices);
+	SafeDeleteArray(indices);
 }
 
 void GridDemo::Update()

@@ -4,7 +4,7 @@
 
 struct asBone
 {
-	int Index;	// root == -1
+	int Index;
 	string Name;
 
 	int Parent;
@@ -19,15 +19,28 @@ struct asMeshPart
 	UINT VertexCount;
 	UINT StartIndex;
 	UINT IndexCount;
-
-	//shader->DrawIndex(0, 0, IndexCount, StartIndex);
 };
 
 struct asMesh
 {
 	int BoneIndex;
+
 	vector<Model::VertexModel> Vertices;
 	vector<UINT> Indices;
 
 	vector<asMeshPart*> MeshParts;
+};
+
+struct asMaterial
+{
+	string Name;
+
+	Color Ambient;
+	Color Diffuse;
+	Color Specular;
+	Color Emissive;
+
+	string DiffuseFile;
+	string SpecularFile;
+	string NormalFile;
 };

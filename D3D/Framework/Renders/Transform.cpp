@@ -162,5 +162,5 @@ void Transform::Render()
 
 	buffer->Render();
 	sBuffer->SetConstantBuffer(buffer->Buffer());
-
+	
 }

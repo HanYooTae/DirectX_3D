@@ -22,6 +22,7 @@
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="ExportFile.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ModelDemo.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -30,13 +31,14 @@
     <ClInclude Include="Converter.h" />
     <ClInclude Include="ExportFile.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="ModelDemo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{5307683B-27C2-4DA2-9FFC-1FE576B4E9D2}</ProjectGuid>
+    <ProjectGuid>{13908599-3DF0-4DFA-9608-A21DDE571113}</ProjectGuid>
     <RootNamespace>UnitTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -87,6 +89,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DH);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(DL);</LibraryPath>
     <IntDir>$(SolutionDir)Debug_$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

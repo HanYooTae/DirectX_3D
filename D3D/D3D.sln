@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Framework", "Framework\Framework.vcxproj", "{7CDB117D-DDEE-44E8-9024-A6BA58876A98}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Framework", "Framework\Framework.vcxproj", "{27F66C4E-CB87-4F60-A630-B3D48B6724E0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTest.vcxproj", "{2383677B-F4CF-4973-B84A-AB974D2A22EB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest\UnitTest.vcxproj", "{FFF09A1A-08DD-4E46-A2D6-86CB1ABEC6DE}"
 	ProjectSection(ProjectDependencies) = postProject
-		{7CDB117D-DDEE-44E8-9024-A6BA58876A98} = {7CDB117D-DDEE-44E8-9024-A6BA58876A98}
+		{27F66C4E-CB87-4F60-A630-B3D48B6724E0} = {27F66C4E-CB87-4F60-A630-B3D48B6724E0}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{7FF61F7B-06A9-48EE-B1C6-87D7376CBDF4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{48467218-BB21-4BEB-9E42-CEE6E37FC9BA}"
 	ProjectSection(SolutionItems) = preProject
 		_Shaders\00_Global.fx = _Shaders\00_Global.fx
 		_Shaders\01_Line.fx = _Shaders\01_Line.fx
@@ -19,18 +19,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{7F
 		_Shaders\04_World.fx = _Shaders\04_World.fx
 		_Shaders\05_Grid.fx = _Shaders\05_Grid.fx
 		_Shaders\06_Texture.fx = _Shaders\06_Texture.fx
-		_Shaders\07.SamplerState.fx = _Shaders\07.SamplerState.fx
+		_Shaders\07_SamplerState.fx = _Shaders\07_SamplerState.fx
 		_Shaders\08_Terrain.fx = _Shaders\08_Terrain.fx
 		_Shaders\09_DebugLine.fx = _Shaders\09_DebugLine.fx
 		_Shaders\10_Terrain.fx = _Shaders\10_Terrain.fx
 		_Shaders\11_Mesh.fx = _Shaders\11_Mesh.fx
 		_Shaders\12_CubeMap.fx = _Shaders\12_CubeMap.fx
 		_Shaders\13_CubeSky.fx = _Shaders\13_CubeSky.fx
+		_Shaders\14_Model.fx = _Shaders\14_Model.fx
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelEditor", "ModelEditor\ModelEditor.vcxproj", "{5307683B-27C2-4DA2-9FFC-1FE576B4E9D2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelEditor", "ModelEditor\ModelEditor.vcxproj", "{13908599-3DF0-4DFA-9608-A21DDE571113}"
 	ProjectSection(ProjectDependencies) = postProject
-		{7CDB117D-DDEE-44E8-9024-A6BA58876A98} = {7CDB117D-DDEE-44E8-9024-A6BA58876A98}
+		{27F66C4E-CB87-4F60-A630-B3D48B6724E0} = {27F66C4E-CB87-4F60-A630-B3D48B6724E0}
 	EndProjectSection
 EndProject
 Global
@@ -39,23 +40,23 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7CDB117D-DDEE-44E8-9024-A6BA58876A98}.Debug|x86.ActiveCfg = Debug|Win32
-		{7CDB117D-DDEE-44E8-9024-A6BA58876A98}.Debug|x86.Build.0 = Debug|Win32
-		{7CDB117D-DDEE-44E8-9024-A6BA58876A98}.Release|x86.ActiveCfg = Release|Win32
-		{7CDB117D-DDEE-44E8-9024-A6BA58876A98}.Release|x86.Build.0 = Release|Win32
-		{2383677B-F4CF-4973-B84A-AB974D2A22EB}.Debug|x86.ActiveCfg = Debug|Win32
-		{2383677B-F4CF-4973-B84A-AB974D2A22EB}.Debug|x86.Build.0 = Debug|Win32
-		{2383677B-F4CF-4973-B84A-AB974D2A22EB}.Release|x86.ActiveCfg = Release|Win32
-		{2383677B-F4CF-4973-B84A-AB974D2A22EB}.Release|x86.Build.0 = Release|Win32
-		{5307683B-27C2-4DA2-9FFC-1FE576B4E9D2}.Debug|x86.ActiveCfg = Debug|Win32
-		{5307683B-27C2-4DA2-9FFC-1FE576B4E9D2}.Debug|x86.Build.0 = Debug|Win32
-		{5307683B-27C2-4DA2-9FFC-1FE576B4E9D2}.Release|x86.ActiveCfg = Release|Win32
-		{5307683B-27C2-4DA2-9FFC-1FE576B4E9D2}.Release|x86.Build.0 = Release|Win32
+		{27F66C4E-CB87-4F60-A630-B3D48B6724E0}.Debug|x86.ActiveCfg = Debug|Win32
+		{27F66C4E-CB87-4F60-A630-B3D48B6724E0}.Debug|x86.Build.0 = Debug|Win32
+		{27F66C4E-CB87-4F60-A630-B3D48B6724E0}.Release|x86.ActiveCfg = Release|Win32
+		{27F66C4E-CB87-4F60-A630-B3D48B6724E0}.Release|x86.Build.0 = Release|Win32
+		{FFF09A1A-08DD-4E46-A2D6-86CB1ABEC6DE}.Debug|x86.ActiveCfg = Debug|Win32
+		{FFF09A1A-08DD-4E46-A2D6-86CB1ABEC6DE}.Debug|x86.Build.0 = Debug|Win32
+		{FFF09A1A-08DD-4E46-A2D6-86CB1ABEC6DE}.Release|x86.ActiveCfg = Release|Win32
+		{FFF09A1A-08DD-4E46-A2D6-86CB1ABEC6DE}.Release|x86.Build.0 = Release|Win32
+		{13908599-3DF0-4DFA-9608-A21DDE571113}.Debug|x86.ActiveCfg = Debug|Win32
+		{13908599-3DF0-4DFA-9608-A21DDE571113}.Debug|x86.Build.0 = Debug|Win32
+		{13908599-3DF0-4DFA-9608-A21DDE571113}.Release|x86.ActiveCfg = Release|Win32
+		{13908599-3DF0-4DFA-9608-A21DDE571113}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F39C57EB-ADAA-491C-952E-44B2699B122A}
+		SolutionGuid = {148133A5-85C3-41FF-AACF-D50786BFCD10}
 	EndGlobalSection
 EndGlobal

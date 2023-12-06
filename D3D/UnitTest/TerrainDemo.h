@@ -14,6 +14,7 @@ public:
 
 private:
 	Shader* shader = nullptr;
-
+	
 	Terrain* terrain = nullptr;
+
 };

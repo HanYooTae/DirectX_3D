@@ -4,7 +4,7 @@ class MeshQuad : public Mesh
 {
 public:
 	MeshQuad(Shader* shader);
-	virtual ~MeshQuad();
+	~MeshQuad();
 
 private:
 	void Create() override;

@@ -48,21 +48,21 @@ void Camera::Rotation(Vector3* vec)
 	*vec = rotation;
 }
 
-void Camera::RotationDegrees(float x, float y, float z)
+void Camera::RotationDegree(float x, float y, float z)
 {
-	RotationDegrees(Vector3(x, y, z));
+	RotationDegree(Vector3(x, y, z));
 }
 
-void Camera::RotationDegrees(Vector3& vec)
+void Camera::RotationDegree(Vector3& vec)
 {
-	rotation = vec * D3DX_PI / 180.f;	// 0.01745328f;
+	rotation = vec * 0.01745328f; //PI / 180
 
 	Rotation(rotation);
 }
 
-void Camera::RotationDegrees(Vector3* vec)
+void Camera::RotationDegree(Vector3* vec)
 {
-	*vec = rotation * 57.29577957f;		// 180 / PI
+	*vec = rotation * 57.29577957f;
 }
 
 void Camera::GetMatrix(Matrix* matrix)
@@ -72,12 +72,6 @@ void Camera::GetMatrix(Matrix* matrix)
 
 void Camera::Rotation()
 {
-	// 회전
-	/*Matrix pitch, yaw, roll;
-	D3DXMatrixRotationX(&pitch, rotation.x);
-	D3DXMatrixRotationY(&yaw, rotation.y);
-	D3DXMatrixRotationZ(&roll, rotation.z);
-	matRotation = pitch * yaw * roll;*/
 	D3DXMatrixRotationYawPitchRoll(&matRotation, rotation.y, rotation.x, rotation.z);
 
 	D3DXVec3TransformNormal(&right, &Vector3(1, 0, 0), &matRotation);
@@ -92,6 +86,5 @@ void Camera::Move()
 
 void Camera::View()
 {
-	// 상대적인 카메라의 위치
 	D3DXMatrixLookAtLH(&matView, &position, &(position + forward), &up);
 }

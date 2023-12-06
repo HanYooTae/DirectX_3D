@@ -1,7 +1,7 @@
 #pragma once
 #include "Systems/IExecute.h"
 
-class TextureDemo : public IExecute
+class PlaneDemo : public IExecute
 {
 public:
 	virtual void Initialize() override;
@@ -13,21 +13,14 @@ public:
 	virtual void ResizeScreen() override {};
 
 private:
-	struct VertexTexture
+	struct Vertex
 	{
 		Vector3 Position;
-		Vector2 Uv;
 	};
 
 private:
 	Shader* shader = nullptr;
 
-	VertexTexture* vertices;
+	Vertex vertices[6];
 	ID3D11Buffer* vertexBuffer;
-
-	UINT* indices;
-	ID3D11Buffer* indexBuffer;
-
-	Texture* baseMap = nullptr;
-
 };

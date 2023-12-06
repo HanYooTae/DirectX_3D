@@ -56,7 +56,7 @@ void ModelMesh::SetShader(Shader* shader)
 	perFrame = new PerFrame(shader);
 
 	sBoneBuffer = shader->AsConstantBuffer("CB_Bones");
-
+	
 	for (ModelMeshPart* part : meshParts)
 		part->SetShader(shader);
 }
@@ -97,18 +97,17 @@ void ModelMesh::Transforms(Matrix* transforms)
 void ModelMesh::SetTransform(Transform* transform)
 {
 	this->transform->Set(transform);
-	this->transform->Set(transform);
 }
 
-//--------------------------------------------------------------------------------
-// ModelPart
-// @ 설계 (DP)Draw Primitive Call(shader->DrawIndexed)
+//-----------------------------------------------------------------------------
+// ModelMeshPart
+// @ 실제 Draw Primitive Call
 // @ Material 단위로 구별됨
-// @ 자기 부위만 그릴거임
-//--------------------------------------------------------------------------------
-
+// @ 딱 자기 부위만 그릴거다
+//-----------------------------------------------------------------------------
 ModelMeshPart::ModelMeshPart()
 {
+
 }
 
 ModelMeshPart::~ModelMeshPart()

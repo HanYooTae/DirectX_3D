@@ -2,7 +2,7 @@
 #include "Buffers.h"
 
 //-----------------------------------------------------------------------------
-//  VertexBuffer
+// VertexBuffer
 //-----------------------------------------------------------------------------
 VertexBuffer::VertexBuffer(void* data, UINT count, UINT stride, UINT slot, bool bCpuWrite, bool bGpuWrite)
 	: data(data)
@@ -21,18 +21,15 @@ VertexBuffer::VertexBuffer(void* data, UINT count, UINT stride, UINT slot, bool 
 	{
 		desc.Usage = D3D11_USAGE_IMMUTABLE;
 	}
-
 	else if (bCpuWrite == true && bGpuWrite == false)
 	{
 		desc.Usage = D3D11_USAGE_DYNAMIC;
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	}
-
 	else if (bCpuWrite == false && bGpuWrite == true)
 	{
 		desc.Usage = D3D11_USAGE_DEFAULT;
 	}
-
 	else
 	{
 		desc.Usage = D3D11_USAGE_STAGING;
@@ -41,7 +38,7 @@ VertexBuffer::VertexBuffer(void* data, UINT count, UINT stride, UINT slot, bool 
 
 	D3D11_SUBRESOURCE_DATA subResource = { 0 };
 	subResource.pSysMem = data;
-
+	
 	Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &buffer));
 }
 
@@ -57,11 +54,10 @@ void VertexBuffer::Render()
 }
 
 //-----------------------------------------------------------------------------
-//  IndexBuffer
+// IndexBuffer
 //-----------------------------------------------------------------------------
-
 IndexBuffer::IndexBuffer(void* data, UINT count)
-	:data(data)
+	: data(data)
 	, count(count)
 {
 	D3D11_BUFFER_DESC desc;
@@ -87,9 +83,8 @@ void IndexBuffer::Render()
 }
 
 //-----------------------------------------------------------------------------
-//  ConstantBuffer
+// ConstantBuffer
 //-----------------------------------------------------------------------------
-
 ConstantBuffer::ConstantBuffer(void* data, UINT dataSize)
 	: data(data)
 	, dataSize(dataSize)

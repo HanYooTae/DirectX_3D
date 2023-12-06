@@ -48,9 +48,9 @@ void IndexBufferDemo::Initialize()
 
 void IndexBufferDemo::Destroy()
 {
-	SafeRelease(indexBuffer);
-	SafeRelease(vertexBuffer);
 	SafeDelete(shader);
+	SafeRelease(vertexBuffer);
+	SafeRelease(indexBuffer);
 }
 
 void IndexBufferDemo::Update()

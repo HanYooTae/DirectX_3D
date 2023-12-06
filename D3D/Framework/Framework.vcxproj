@@ -32,6 +32,7 @@
     <ClCompile Include="Meshes\MeshSphere.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\ModelMesh.cpp" />
+    <ClCompile Include="Model\ModelRender.cpp" />
     <ClCompile Include="Objects\CubeMap.cpp" />
     <ClCompile Include="Renders\Buffers.cpp" />
     <ClCompile Include="Renders\Context.cpp" />
@@ -71,6 +72,7 @@
     <ClInclude Include="Meshes\MeshSphere.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Model\ModelMesh.h" />
+    <ClInclude Include="Model\ModelRender.h" />
     <ClInclude Include="Objects\CubeMap.h" />
     <ClInclude Include="Renders\Buffers.h" />
     <ClInclude Include="Renders\Context.h" />
@@ -102,7 +104,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7cdb117d-ddee-44e8-9024-a6ba58876a98}</ProjectGuid>
+    <ProjectGuid>{27f66c4e-cb87-4f60-a630-b3d48b6724e0}</ProjectGuid>
     <RootNamespace>Framework</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -154,6 +156,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DH)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(DL)</LibraryPath>
     <IntDir>$(SolutionDir)Debug_$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

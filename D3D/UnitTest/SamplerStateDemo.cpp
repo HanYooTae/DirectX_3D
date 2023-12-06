@@ -3,18 +3,18 @@
 
 void SamplerStateDemo::Initialize()
 {
-	Context::Get()->GetCamera()->RotationDegrees(0, 0, 0);
+	Context::Get()->GetCamera()->RotationDegree(0, 0, 0);
 	Context::Get()->GetCamera()->Position(0, 0, -5);
 	((Freedom*)Context::Get()->GetCamera())->Speed(5, 0);
 
-	shader = new Shader(L"07.SamplerState.fxo");
+	shader = new Shader(L"07_SamplerState.fxo");
 
 	vertices = new VertexTexture[4];
 
-	vertices[0].Position = Vector3(-0.5f, -0.5f, +0.0f);
-	vertices[1].Position = Vector3(-0.5f, +0.5f, +0.0f);
-	vertices[2].Position = Vector3(+0.5f, -0.5f, +0.0f);
-	vertices[3].Position = Vector3(+0.5f, +0.5f, +0.0f);
+	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.f);
+	vertices[1].Position = Vector3(-0.5f, +0.5f, 0.f);
+	vertices[2].Position = Vector3(+0.5f, -0.5f, 0.f);
+	vertices[3].Position = Vector3(+0.5f, +0.5f, 0.f);
 
 	vertices[0].Uv = Vector2(0, 2);
 	vertices[1].Uv = Vector2(0, 0);
@@ -33,9 +33,9 @@ void SamplerStateDemo::Initialize()
 
 		Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer));
 	}
-
-	indices = new UINT[6]{ 0, 1, 2, 2, 1, 3 };
-
+	
+	indices = new UINT[6]{ 0, 1, 2, 2, 1, 3};
+	D3D11_SAMPLER_DESC;
 	//Create Index Buffer
 	{
 		D3D11_BUFFER_DESC desc;
@@ -57,10 +57,11 @@ void SamplerStateDemo::Initialize()
 
 void SamplerStateDemo::Destroy()
 {
-	SafeDelete(baseMap);
-	SafeRelease(indexBuffer);
-	SafeRelease(vertexBuffer);
 	SafeDelete(shader);
+	SafeRelease(vertexBuffer);
+	SafeRelease(indexBuffer);
+
+	SafeDelete(baseMap);
 }
 
 void SamplerStateDemo::Update()
@@ -68,7 +69,7 @@ void SamplerStateDemo::Update()
 	if (ImGui::Button("Load Texture"))
 	{
 		function<void(wstring)> OnLoad = bind(&SamplerStateDemo::OnLoadTexture, this, placeholders::_1);
-		Path::OpenFileDialog(L"", L"Image Files\0*.png;.bmp;*.jpg\0\0", L"../../_Textures/", OnLoad, D3D::GetDesc().Handle);
+		Path::OpenFileDialog(L"", Path::ImageFilter, L"../../_Textures/", OnLoad, D3D::GetDesc().Handle);
 	}
 
 	/*static UINT Filter = 0;
@@ -93,19 +94,18 @@ void SamplerStateDemo::Render()
 {
 	UINT stride = sizeof(VertexTexture);
 	UINT offset = 0;
+
 	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 	D3D::GetDC()->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	D3D::GetDC()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
+	
 	shader->AsSRV("BaseMap")->SetResource(baseMap->SRV());
-
 
 	shader->DrawIndexed(0, 0, 6);
 }
 
 void SamplerStateDemo::OnLoadTexture(wstring path)
 {
-	//MessageBox(D3D::GetDesc().Handle, path.c_str(), L"HAHA", MB_OK);
 	SafeDelete(baseMap);
 
 	baseMap = new Texture(path);

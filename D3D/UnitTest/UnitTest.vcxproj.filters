@@ -15,7 +15,7 @@
     <ClCompile Include="PolygonDemo.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="PlainDemo.cpp">
+    <ClCompile Include="PlaneDemo.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
     <ClCompile Include="WorldDemo.cpp">
@@ -58,7 +58,7 @@
     <ClInclude Include="PolygonDemo.h">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="PlainDemo.h">
+    <ClInclude Include="PlaneDemo.h">
       <Filter>Mesh</Filter>
     </ClInclude>
     <ClInclude Include="WorldDemo.h">
@@ -88,13 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Line">
-      <UniqueIdentifier>{dbf2b681-0950-40fb-ab65-febec85f20c7}</UniqueIdentifier>
+      <UniqueIdentifier>{9294a56e-36d4-4a33-b154-f65a5609d7de}</UniqueIdentifier>
     </Filter>
     <Filter Include="Mesh">
-      <UniqueIdentifier>{de0e0828-7ffc-4115-9f02-7213f18f8fb9}</UniqueIdentifier>
+      <UniqueIdentifier>{bde60a37-c865-40c7-a4f4-71bd59e32389}</UniqueIdentifier>
     </Filter>
     <Filter Include="World">
-      <UniqueIdentifier>{231a90ea-448f-42eb-b661-0cf4b84b2ad1}</UniqueIdentifier>
+      <UniqueIdentifier>{475c5738-ff29-42c7-ac3c-82e194b7d8ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,5 +14,5 @@ public:
 
 private:
 	void Tank();
-	
+	void Kachujin();
 };

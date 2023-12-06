@@ -3,8 +3,8 @@
 class PerFrame
 {
 public:
-	PerFrame(Shader* shader);
-	~PerFrame();
+    PerFrame(Shader* shader);
+    ~PerFrame();
 
     void Update();
     void Render();

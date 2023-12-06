@@ -3,7 +3,7 @@
 
 void TerrainDemo::Initialize()
 {
-	Context::Get()->GetCamera()->RotationDegrees(15, 0, 0);
+	Context::Get()->GetCamera()->RotationDegree(15, 0, 0);
 	Context::Get()->GetCamera()->Position(113, 63, -90);
 	((Freedom*)Context::Get()->GetCamera())->Speed(50, 2);
 
@@ -14,8 +14,8 @@ void TerrainDemo::Initialize()
 
 void TerrainDemo::Destroy()
 {
-	SafeDelete(terrain);
 	SafeDelete(shader);
+	SafeDelete(terrain);
 }
 
 void TerrainDemo::Update()

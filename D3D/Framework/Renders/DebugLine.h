@@ -24,12 +24,15 @@ public:
 	void RenderLine(float x, float y, float z, float x2, float y2, float z2, Color& color);
 
 private:
-	void Update();	// WVP
+	void Update();
 	void Render();
 
 private:
 	DebugLine();
 	~DebugLine();
+
+private:
+	static DebugLine* instance;
 
 private:
 	struct VertexLine
@@ -39,18 +42,12 @@ private:
 	};
 
 private:
-	static DebugLine* instance;
-
-private:
 	Shader* shader;
 
 	Matrix world;
-	
+
 	ID3D11Buffer* vertexBuffer;
 	VertexLine* vertices;
 
 	UINT drawCount = 0;
-
-	// RenderLine(start, end, color)
-
 };

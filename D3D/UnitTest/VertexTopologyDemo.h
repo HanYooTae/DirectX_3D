@@ -22,9 +22,5 @@ private:
 	Shader* shader = nullptr;
 
 	Vertex vertices[6];
-
-	// ComInterface의 특징
-	// ->new, delete를 쓸 수 없음. => Create, Release로 대체
 	ID3D11Buffer* vertexBuffer;
-	
 };

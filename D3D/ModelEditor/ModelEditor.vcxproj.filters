@@ -3,23 +3,25 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="ExportFile.cpp" />
     <ClCompile Include="Converter.cpp">
       <Filter>Converter</Filter>
     </ClCompile>
-    <ClCompile Include="ExportFile.cpp" />
+    <ClCompile Include="ModelDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ExportFile.h" />
     <ClInclude Include="Converter.h">
       <Filter>Converter</Filter>
     </ClInclude>
-    <ClInclude Include="ExportFile.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="ModelDemo.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Converter">
-      <UniqueIdentifier>{8fbb7e62-0e5d-4c04-b7df-fa64a8ec494f}</UniqueIdentifier>
+      <UniqueIdentifier>{b5b82204-a970-47b4-853e-aaaab70b7d7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 #include "Systems/IExecute.h"
 
-class TextureDemo : public IExecute
+class ModelDemo : public IExecute
 {
 public:
 	virtual void Initialize() override;
@@ -13,21 +13,15 @@ public:
 	virtual void ResizeScreen() override {};
 
 private:
-	struct VertexTexture
-	{
-		Vector3 Position;
-		Vector2 Uv;
-	};
+	void Tank();
+	void Kachujin();
 
 private:
-	Shader* shader = nullptr;
+	Shader* shader;
+	ModelRender* tank = nullptr;
+	ModelRender* kachujin = nullptr;
 
-	VertexTexture* vertices;
-	ID3D11Buffer* vertexBuffer;
-
-	UINT* indices;
-	ID3D11Buffer* indexBuffer;
-
-	Texture* baseMap = nullptr;
-
+	CubeSky* sky;
+	Shader* planeShader;
+	MeshPlane* plane;
 };

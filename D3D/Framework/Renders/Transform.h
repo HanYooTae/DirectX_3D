@@ -31,7 +31,7 @@ public:
 	Vector3 Forward();
 
 	void World(Matrix& matrix);
-	Matrix& World() { return bufferDesc.World; }
+	Matrix& World() {	return bufferDesc.World; }
 
 private:
 	void UpdateWorld();
@@ -45,6 +45,7 @@ private:
 	{
 		Matrix World;
 	} bufferDesc;
+
 
 private:
 	Shader* shader;

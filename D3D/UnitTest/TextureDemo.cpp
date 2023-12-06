@@ -3,7 +3,7 @@
 
 void TextureDemo::Initialize()
 {
-	Context::Get()->GetCamera()->RotationDegrees(0, 0, 0);
+	Context::Get()->GetCamera()->RotationDegree(0, 0, 0);
 	Context::Get()->GetCamera()->Position(0, 0, -5);
 	((Freedom*)Context::Get()->GetCamera())->Speed(5, 0);
 
@@ -11,10 +11,10 @@ void TextureDemo::Initialize()
 
 	vertices = new VertexTexture[4];
 
-	vertices[0].Position = Vector3(-0.5f, -0.5f, +0.0f);
-	vertices[1].Position = Vector3(-0.5f, +0.5f, +0.0f);
-	vertices[2].Position = Vector3(+0.5f, -0.5f, +0.0f);
-	vertices[3].Position = Vector3(+0.5f, +0.5f, +0.0f);
+	vertices[0].Position = Vector3(-0.5f, -0.5f, 0.f);
+	vertices[1].Position = Vector3(-0.5f, +0.5f, 0.f);
+	vertices[2].Position = Vector3(+0.5f, -0.5f, 0.f);
+	vertices[3].Position = Vector3(+0.5f, +0.5f, 0.f);
 
 	vertices[0].Uv = Vector2(0, 1);
 	vertices[1].Uv = Vector2(0, 0);
@@ -33,8 +33,8 @@ void TextureDemo::Initialize()
 
 		Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer));
 	}
-
-	indices = new UINT[6]{ 0, 1, 2, 2, 1, 3 };
+	
+	indices = new UINT[6]{ 0, 1, 2, 2, 1, 3};
 
 	//Create Index Buffer
 	{
@@ -57,15 +57,15 @@ void TextureDemo::Initialize()
 
 void TextureDemo::Destroy()
 {
-	SafeDelete(baseMap);
-	SafeRelease(indexBuffer);
-	SafeRelease(vertexBuffer);
 	SafeDelete(shader);
+	SafeRelease(vertexBuffer);
+	SafeRelease(indexBuffer);
+
+	SafeDelete(baseMap);
 }
 
 void TextureDemo::Update()
 {
-	
 	Matrix world;
 	D3DXMatrixIdentity(&world);
 
@@ -78,12 +78,12 @@ void TextureDemo::Render()
 {
 	UINT stride = sizeof(VertexTexture);
 	UINT offset = 0;
+
 	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 	D3D::GetDC()->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	D3D::GetDC()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
+	
 	shader->AsSRV("BaseMap")->SetResource(baseMap->SRV());
-
 
 	shader->DrawIndexed(0, 0, 6);
 }

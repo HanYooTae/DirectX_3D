@@ -9,6 +9,7 @@ public:
 	void Update();
 	void Render();
 
+public:
 	Shader* GetShader() { return shader; }
 	void Pass(UINT val) { sphere->Pass(val); }
 

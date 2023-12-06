@@ -25,6 +25,7 @@ void Mesh::Render()
 	if (vertexBuffer == nullptr || indexBuffer == nullptr)
 	{
 		Create();
+
 		vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexMesh));
 		indexBuffer = new IndexBuffer(indices, indexCount);
 	}

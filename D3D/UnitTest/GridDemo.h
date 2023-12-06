@@ -30,6 +30,6 @@ private:
 	UINT indexCount;
 	UINT* indices;
 	ID3D11Buffer* indexBuffer;
-	
+
 	Matrix world;
 };

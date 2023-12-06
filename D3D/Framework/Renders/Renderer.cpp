@@ -55,3 +55,4 @@ void Renderer::Render()
 	perFrame->Render();
 	transform->Render();
 }
+

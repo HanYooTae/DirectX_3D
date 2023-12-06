@@ -80,18 +80,21 @@ void DebugLine::Render()
 	drawCount = 0;
 }
 
+
 DebugLine::DebugLine()
 {
 	shader = new Shader(L"09_DebugLine.fxo");
+	
 	vertices = new VertexLine[MAX_DEBUG_LINE];
 	ZeroMemory(vertices, sizeof(VertexLine) * MAX_DEBUG_LINE);
 
-	// Create VertexBuffer
+	//Create VertexBuffer
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
 		desc.ByteWidth = sizeof(VertexLine) * MAX_DEBUG_LINE;
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		desc.Usage;
 
 		D3D11_SUBRESOURCE_DATA subResource = { 0 };
 		subResource.pSysMem = vertices;
@@ -108,3 +111,4 @@ DebugLine::~DebugLine()
 	SafeDeleteArray(vertices);
 	SafeRelease(vertexBuffer);
 }
+

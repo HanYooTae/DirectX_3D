@@ -13,6 +13,9 @@ public:
 	virtual void ResizeScreen() override {};
 
 private:
+	void OnLoadTexture(wstring path);
+
+private:
 	struct VertexTexture
 	{
 		Vector3 Position;
@@ -20,16 +23,14 @@ private:
 	};
 
 private:
-	void OnLoadTexture(wstring path);
-
-private:
 	Shader* shader = nullptr;
 
 	VertexTexture* vertices;
 	ID3D11Buffer* vertexBuffer;
-	
+
 	UINT* indices;
 	ID3D11Buffer* indexBuffer;
 
 	Texture* baseMap = nullptr;
+
 };
