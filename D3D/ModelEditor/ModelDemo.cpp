@@ -11,6 +11,7 @@ void ModelDemo::Initialize()
 	
 	Tank();
 	Kachujin();
+	Tower();
 
 	sky = new CubeSky(L"Environment/GrassCube1024.dds");
 	sky->Pass(2);
@@ -26,6 +27,7 @@ void ModelDemo::Destroy()
 	SafeDelete(shader);
 	SafeDelete(tank);
 	SafeDelete(kachujin);
+	SafeDelete(tower);
 
 	SafeDelete(sky);
 	SafeDelete(planeShader);
@@ -42,7 +44,7 @@ void ModelDemo::Update()
 	static UINT pass = 0;
 	ImGui::InputInt("Pass", (int*)&pass);
 	pass %= 2;
-
+	
 	sky->Update();
 	plane->Update();
 
@@ -57,6 +59,12 @@ void ModelDemo::Update()
 		kachujin->Pass(pass);
 		kachujin->Update();
 	}
+
+	if (tower != nullptr)
+	{
+		tower->Pass(pass);
+		tower->Update();
+	}
 }
 
 void ModelDemo::Render()
@@ -69,6 +77,9 @@ void ModelDemo::Render()
 
 	if (kachujin != nullptr)
 		kachujin->Render();
+
+	if (tower != nullptr)
+		tower->Render();
 }
 
 void ModelDemo::Tank()
@@ -81,6 +92,16 @@ void ModelDemo::Kachujin()
 {
 	kachujin = new ModelRender(shader);
 	kachujin->ReadMesh(L"Kachujin/Mesh");
-	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
+
 	kachujin->GetTransform()->Position(5, 0, 0);
+	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
+}
+
+void ModelDemo::Tower()
+{
+	tower = new ModelRender(shader);
+	tower->ReadMesh(L"Tower/Tower");
+
+	tower->GetTransform()->Position(-5, 0, 0);
+	tower->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
 }

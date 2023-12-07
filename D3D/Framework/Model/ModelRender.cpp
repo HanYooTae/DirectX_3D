@@ -32,7 +32,6 @@ void ModelRender::Update()
 
 void ModelRender::Render()
 {
-
 	for (ModelMesh* mesh : model->meshes)
 	{
 		mesh->SetTransform(transform);

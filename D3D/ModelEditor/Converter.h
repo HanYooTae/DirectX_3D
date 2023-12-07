@@ -20,13 +20,13 @@ private:
 
 	//scene의 maetrial 정보를 *.material(xml)
 public:
-	void ExportMaterial(wstring savePath, bool bOverwrite = true);
+	void ExportMaterial(wstring savePath, bool bOverWrite = true);
 
 private:
 	void ReadMaterialData();
 	bool FoundMaterialData(aiMaterial* material);
 	void WriteMaterialData(wstring savePath);
-	string WriteTexture(string saveFolder, string File);
+	string WriteTexture(string saveFolder, string file);
 
 private:
 	wstring file;
@@ -36,6 +36,6 @@ private:
 
 	vector<struct asBone*> bones;
 	vector<struct asMesh*> meshes;
-
+	
 	vector<struct asMaterial*> materials;
 };

@@ -15,11 +15,14 @@ public:
 private:
 	void Tank();
 	void Kachujin();
+	void Tower();
 
 private:
 	Shader* shader;
+
 	ModelRender* tank = nullptr;
 	ModelRender* kachujin = nullptr;
+	ModelRender* tower = nullptr;
 
 	CubeSky* sky;
 	Shader* planeShader;
