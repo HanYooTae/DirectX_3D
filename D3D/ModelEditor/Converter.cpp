@@ -17,7 +17,15 @@ Converter::~Converter()
 		SafeDelete(bone);
 
 	for (asMesh* mesh : meshes)
+	{
+		for (asMeshPart* part : mesh->MeshParts)
+			SafeDelete(part);
+
 		SafeDelete(mesh);
+	}
+
+	for (asMaterial* material : materials)
+		SafeDelete(material);
 }
 
 void Converter::ReadFile(wstring file)
@@ -329,35 +337,72 @@ string Converter::WriteTexture(string saveFolder, string file)
 
 	string fileName = Path::GetFileName(file);
 	const aiTexture* texture = scene->GetEmbeddedTexture(file.c_str());
-
+	
 	string path = "";
 
-	// Embeded Texture in fbx
+	//Embeded Texture in FBX
 	if (texture != nullptr)
 	{
 		path = saveFolder + Path::GetFileNameWithoutExtension(file) + ".png";
-		BinaryWriter* w = new BinaryWriter(String::ToWString(path));
 
+		BinaryWriter* w = new BinaryWriter(String::ToWString(path));
 		w->Byte(texture->pcData, texture->mWidth);
 		SafeDelete(w);
 	}
-
-	// External Texture
+	//External Texture
 	else
 	{
 		string directory = Path::GetDirectoryName(String::ToString(this->file));
-		string origin =  directory + file;
+		string origin = directory + file;
 		String::Replace(&origin, "\\", "/");
 
 		if (Path::ExistFile(origin) == false)
 			return "";
 
 		path = saveFolder + fileName;
-
-		CopyFileA(origin.c_str(), path.c_str(), false);
+		CopyFileA(origin.c_str(), path.c_str(), FALSE);
 
 		String::Replace(&path, "../../_Textures/", "");
 	}
 
 	return Path::GetFileName(path);
+}
+
+void Converter::ExportAnimClip(UINT index, wstring savePath)
+{
+	savePath = L"../../_Models/" + savePath + L".clip";
+
+	asClip* clip = ReadClipData(scene->mAnimations[index]);
+	WriteClipData(clip, savePath);
+}
+
+asClip* Converter::ReadClipData(aiAnimation* animation)
+{
+	asClip* clip = new asClip();
+	clip->Name = animation->mName.C_Str();
+	clip->FrameRate = (float)animation->mTicksPerSecond;
+	clip->FrameCount = (UINT)animation->mDuration + 1;
+
+	vector<asClipNode> aniNodeInfos;
+	for (UINT i = 0; i < animation->mNumChannels; i++)	// node : meshBone, channel : animBone
+	{
+		// Get One Anim Bone
+		aiNodeAnim* aniNode = animation->mChannels[i];
+		
+		// Save Data to Temp
+		asClipNode aniNodeInfo;
+		aniNodeInfo.Name = aniNode->mNodeName;
+
+		aniNode->mNumPositionKeys;
+	}
+
+	return clip;
+}
+
+void Converter::ReadKeyframeData(asClip* clip, aiNode node, vector<struct asClipNode>& aniNodeInfos)
+{
+}
+
+void Converter::WriteClipData(asClip* clip, wstring savePath)
+{
 }
