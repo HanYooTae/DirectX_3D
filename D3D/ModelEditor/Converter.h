@@ -16,6 +16,7 @@ public:
 private:
 	void ReadBoneData(aiNode* node, int index, int parent);
 	void ReadMeshData(aiNode* node, int index);
+	void ReadSkinData();
 	void WriteMeshData(wstring savePath);
 
 	//scene의 maetrial 정보를 *.material(xml)
@@ -34,7 +35,7 @@ public:
 
 private:
 	struct asClip* ReadClipData(aiAnimation* animation);	// Keyframe 저장
-	void ReadKeyframeData(struct asClip* clip, aiNode node, vector<struct asClipNode>& aniNodeInfos);	 // Retarget
+	void ReadKeyframeData(struct asClip* clip, aiNode* node, vector<struct asClipNode>& aniNodeInfos);	 // Retarget
 	void WriteClipData(struct asClip* clip, wstring savePath);
 
 private:
