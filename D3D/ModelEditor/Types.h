@@ -54,6 +54,7 @@ struct asMaterial
 //---------------------------------------------------------------
 // Animation
 //---------------------------------------------------------------
+// 1 Bone, 1 Frame
 struct asKeyFrameData
 {
 	float Frame;
@@ -102,14 +103,85 @@ struct asBlendWeight
 		float w = (float)weight;
 		switch (iterator)
 		{
-		case 0:	Indices.x = 
+		case 0:	Indices.x = i; Weights.x = w; break;
+		case 1:	Indices.y = i; Weights.y = w; break;
+		case 2:	Indices.z = i; Weights.z = w; break;
+		case 3:	Indices.w = i; Weights.w = w; break;
 		}
 	}
 };
 
+// Calculate Bone Weights -> Normalize(0~1) & Desc Sort
 struct asBoneWeights
 {
 private:
 	typedef pair<int, float> Pair;
 	vector<Pair> BoneWeights;	// BoneIndex, BoneWeight
+
+public:
+	void AddWeights(UINT boneIndex, float boneWeights)
+	{
+		if (boneWeights <= 0.f) return;
+
+		bool bAdd = false;
+
+		vector<Pair>::iterator it = BoneWeights.begin();
+
+		while (it != BoneWeights.end())
+		{
+			if (boneWeights > it->second)
+			{
+				BoneWeights.insert(it, Pair(boneIndex, boneWeights));
+				bAdd = true;
+
+				break;
+			}
+
+			it++;
+		}
+
+		if (bAdd == false)
+			BoneWeights.push_back(Pair(boneIndex, boneWeights));
+	}
+
+	void Normalize()
+	{
+		float totalWeight = 0.f;
+		int i = 0;
+
+		vector<Pair>::iterator it = BoneWeights.begin();
+
+		while (it != BoneWeights.end())
+		{
+			if (i < 4)
+			{
+				totalWeight += it->second;
+
+				i++;
+				it++;
+			}
+
+			else
+				it = BoneWeights.erase(it);
+		}
+
+		float scale = 1.f / totalWeight;
+
+		it = BoneWeights.begin();
+		while (it != BoneWeights.end())
+		{
+			it->second *= scale;
+			it++;
+		}
+	}
+
+	void GetBlendWeights(asBlendWeight& outBlendWeights)
+	{
+		for (UINT i = 0; i < BoneWeights.size(); i++)
+		{
+			if (i >= 4) return;
+
+			outBlendWeights.Set(i, BoneWeights[i].first, BoneWeights[i].second);
+		}
+	}
 };
