@@ -15,7 +15,7 @@ struct ModelKeyFrameData
 // 1 Bone, All Frame
 struct ModelKeyFrame
 {
-	string BoneName;
+	wstring BoneName;
 	vector<ModelKeyFrameData> Transforms;
 };
 
@@ -25,10 +25,11 @@ class ModelClip
 public:
 	friend class Model;
 
-public:
+private:
 	ModelClip() = default;
 	~ModelClip() = default;
 
+public:
 	UINT FrameCount() { return frameCount; }
 	float FrameRate() { return frameRate; }
 
