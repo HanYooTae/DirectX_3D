@@ -201,7 +201,7 @@ void Model::ReadMaterial(wstring file)
 
 void Model::ReadClip(wstring file)
 {
-	file = L"../../_Models" + file + L".clip";
+	file = L"../../_Models/" + file + L".clip";
 
 	BinaryReader* r = new BinaryReader(file);
 
