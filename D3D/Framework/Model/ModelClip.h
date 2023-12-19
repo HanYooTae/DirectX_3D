@@ -1,8 +1,6 @@
 #pragma once
-#include <string>
-#include <string>
 
-// 1 Bone, 1 Frame
+//1 Bone, 1 Frame
 struct ModelKeyFrameData
 {
 	float Frame;
@@ -12,14 +10,14 @@ struct ModelKeyFrameData
 	Vector3 Translation;
 };
 
-// 1 Bone, All Frame
+//1 Bone, All Frame
 struct ModelKeyFrame
 {
 	wstring BoneName;
 	vector<ModelKeyFrameData> Transforms;
 };
 
-// All Bone, All Frame(Final)
+//All Bone, All Frame(Final)
 class ModelClip
 {
 public:
@@ -27,7 +25,7 @@ public:
 
 private:
 	ModelClip() = default;
-	~ModelClip() = default;
+	~ModelClip() = default;;
 
 public:
 	UINT FrameCount() { return frameCount; }
@@ -41,5 +39,5 @@ private:
 	UINT frameCount;
 	float frameRate;
 
-	unordered_map<wstring, ModelKeyFrame*> keyframeMap;		// Key : BoneName, Value : All Frame
+	unordered_map<wstring, ModelKeyFrame*> keyframeMap; //Key : BoneName, Value : All Frame
 };

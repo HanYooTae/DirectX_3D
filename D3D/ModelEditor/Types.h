@@ -2,9 +2,9 @@
 
 #include "stdafx.h"
 
-//---------------------------------------------------------------
-// Mesh
-//---------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Mesh
+//-----------------------------------------------------------------------------
 struct asBone
 {
 	int Index;
@@ -34,9 +34,9 @@ struct asMesh
 	vector<asMeshPart*> MeshParts;
 };
 
-//---------------------------------------------------------------
-// Material
-//---------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Material
+//-----------------------------------------------------------------------------
 struct asMaterial
 {
 	string Name;
@@ -51,10 +51,10 @@ struct asMaterial
 	string NormalFile;
 };
 
-//---------------------------------------------------------------
-// Animation
-//---------------------------------------------------------------
-// 1 Bone, 1 Frame
+//-----------------------------------------------------------------------------
+//Animation
+//-----------------------------------------------------------------------------
+//1 Bone, 1 Frame
 struct asKeyFrameData
 {
 	float Frame;
@@ -64,14 +64,14 @@ struct asKeyFrameData
 	Vector3 Translation;
 };
 
-// 1 Bone, All Frame
+//1 Bone, All Frame
 struct asKeyFrame
 {
 	string BoneName;
 	vector<asKeyFrameData> Transforms;
 };
 
-// All Bone, All Frame(Final)
+//All Bone, All Frame(Final)
 struct asClip
 {
 	string Name;
@@ -79,19 +79,20 @@ struct asClip
 	UINT FrameCount;
 	float FrameRate;
 
-	vector<asKeyFrame*> KeyFrames;
+	vector<asKeyFrame*> Keyframes;
 };
 
-// 1 Bone, All Frame(Temp)
+//1 Bone, All Frame(Temp)
 struct asClipNode
 {
-	aiString Name;		// animBone Name
+	aiString Name; //animBone Name
 	vector<asKeyFrameData> Keyframe;
 };
 
-//---------------------------------------------------------------
-// Skinning
-//---------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Skinning
+//-----------------------------------------------------------------------------
+//Write Bone Weights in Vertex(Temp)
 struct asBlendWeight
 {
 	Vector4 Indices = Vector4(0, 0, 0, 0);
@@ -100,23 +101,24 @@ struct asBlendWeight
 	void Set(UINT iterator, UINT boneIndex, float weight)
 	{
 		float i = (float)boneIndex;
-		float w = (float)weight;
+		float w = weight;
+
 		switch (iterator)
 		{
-		case 0:	Indices.x = i; Weights.x = w; break;
-		case 1:	Indices.y = i; Weights.y = w; break;
-		case 2:	Indices.z = i; Weights.z = w; break;
-		case 3:	Indices.w = i; Weights.w = w; break;
+			case 0: Indices.x = i; Weights.x = w; break;
+			case 1: Indices.y = i; Weights.y = w; break;
+			case 2: Indices.z = i; Weights.z = w; break;
+			case 3: Indices.w = i; Weights.w = w; break;
 		}
 	}
 };
 
-// Calculate Bone Weights -> Normalize(0~1) & Desc Sort
+//Calculate Bone Weights -> Normalize(0~1) & Desc Sort
 struct asBoneWeights
 {
 private:
 	typedef pair<int, float> Pair;
-	vector<Pair> BoneWeights;	// BoneIndex, BoneWeight
+	vector<Pair> BoneWeigths; //BoneIndex, BoneWeihgt
 
 public:
 	void AddWeights(UINT boneIndex, float boneWeights)
@@ -125,13 +127,12 @@ public:
 
 		bool bAdd = false;
 
-		vector<Pair>::iterator it = BoneWeights.begin();
-
-		while (it != BoneWeights.end())
+		vector<Pair>::iterator it = BoneWeigths.begin();
+		while (it != BoneWeigths.end())
 		{
 			if (boneWeights > it->second)
 			{
-				BoneWeights.insert(it, Pair(boneIndex, boneWeights));
+				BoneWeigths.insert(it, Pair(boneIndex, boneWeights));
 				bAdd = true;
 
 				break;
@@ -141,7 +142,7 @@ public:
 		}
 
 		if (bAdd == false)
-			BoneWeights.push_back(Pair(boneIndex, boneWeights));
+			BoneWeigths.push_back(Pair(boneIndex, boneWeights));
 	}
 
 	void Normalize()
@@ -149,39 +150,36 @@ public:
 		float totalWeight = 0.f;
 		int i = 0;
 
-		vector<Pair>::iterator it = BoneWeights.begin();
-
-		while (it != BoneWeights.end())
+		vector<Pair>::iterator it = BoneWeigths.begin();
+		while (it != BoneWeigths.end())
 		{
 			if (i < 4)
 			{
 				totalWeight += it->second;
-
-				i++;
-				it++;
+				i++;  it++;
 			}
-
 			else
-				it = BoneWeights.erase(it);
+				it = BoneWeigths.erase(it);
 		}
 
 		float scale = 1.f / totalWeight;
 
-		it = BoneWeights.begin();
-		while (it != BoneWeights.end())
+		it = BoneWeigths.begin();
+		while (it != BoneWeigths.end())
 		{
 			it->second *= scale;
 			it++;
 		}
 	}
 
-	void GetBlendWeights(asBlendWeight& outBlendWeights)
+	void GetBlendWeigths(asBlendWeight& outBlendWeights)
 	{
-		for (UINT i = 0; i < BoneWeights.size(); i++)
+		for (UINT i = 0; i < BoneWeigths.size(); i++)
 		{
 			if (i >= 4) return;
 
-			outBlendWeights.Set(i, BoneWeights[i].first, BoneWeights[i].second);
+			outBlendWeights.Set(i, BoneWeigths[i].first, BoneWeigths[i].second);
 		}
 	}
+
 };

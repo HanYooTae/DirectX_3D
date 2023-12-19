@@ -12,15 +12,11 @@ void ExportFile::Initialize()
 
 void ExportFile::Tank()
 {
-	Converter* conv = nullptr;
-
-	conv = new Converter();
+	Converter* conv = new Converter();
 	conv->ReadFile(L"Tank/tank.fbx");
 	conv->ExportMesh(L"Tank/Tank");
 	conv->ExportMaterial(L"Tank/Tank", false);
 	SafeDelete(conv);
-
-	
 }
 
 void ExportFile::Kachujin()
@@ -47,7 +43,6 @@ void ExportFile::Kachujin()
 	conv->ReadFile(L"Kachujin/Sword And Shield Run.fbx");
 	conv->ExportAnimClip(0, L"Kachujin/Run");
 	SafeDelete(conv);
-
 
 	conv = new Converter();
 	conv->ReadFile(L"Kachujin/Sword And Shield Slash.fbx");

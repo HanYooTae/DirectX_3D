@@ -29,14 +29,16 @@ private:
 	void WriteMaterialData(wstring savePath);
 	string WriteTexture(string saveFolder, string file);
 
-	// (Animation.fbx)scene의 Clip정보를 *.clip
+	//(Animation.fbx)scene의 Clipo 정보를 *.clip
 public:
 	void ExportAnimClip(UINT index, wstring savePath);
 
 private:
-	struct asClip* ReadClipData(aiAnimation* animation);	// Keyframe 저장
-	void ReadKeyframeData(struct asClip* clip, aiNode* node, vector<struct asClipNode>& aniNodeInfos);	 // Retarget
+	struct asClip* ReadClipData(aiAnimation* animation); //Keyframe 저장
+	void ReadKeyframeData(struct asClip* clip, aiNode* node, vector<struct asClipNode>& aniNodeInfos); //Retarget
 	void WriteClipData(struct asClip* clip, wstring savePath);
+
+private:
 
 private:
 	wstring file;

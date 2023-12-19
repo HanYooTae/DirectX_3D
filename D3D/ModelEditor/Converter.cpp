@@ -141,9 +141,6 @@ void Converter::ReadMeshData(aiNode* node, int index)
 
 void Converter::ReadSkinData()
 {
-	// Get aiMesh : fbx의 mesh 정보
-	// aiMesh->GetBone : 스키닝 가중치 정보를 얻기 위함
-	// Write Model::VertexModel
 	for (UINT i = 0; i < scene->mNumMeshes; i++)
 	{
 		aiMesh* aiMesh = scene->mMeshes[i];
@@ -152,8 +149,8 @@ void Converter::ReadSkinData()
 
 		asMesh* mesh = meshes[i];
 
-		vector<asBoneWeights> boneWeights;
-		boneWeights.assign(mesh->Vertices.size(), asBoneWeights());
+		vector<asBoneWeights> boneWeigts;
+		boneWeigts.assign(mesh->Vertices.size(), asBoneWeights());
 
 		//aiMesh(fbx)에 연결된 bone & 저장된 bones(asBone) 비교 -> 이름이 같은 bone을 찾는다
 		for (UINT b = 0; b < aiMesh->mNumBones; b++)
@@ -169,32 +166,33 @@ void Converter::ReadSkinData()
 					boneIndex = bone->Index;
 					break;
 				}
-			}	// for (asBone)
-			
-			//이 bone에 붙은 가중치를 Get -> 내림차순 정렬
+			} //for (asBone)
+
+			//이 bone에 붙은 가중치를 Get -> 내림차순 정렬 
 			for (UINT w = 0; w < aiMeshBone->mNumWeights; w++)
 			{
-				UINT vertexId = aiMeshBone->mWeights[w].mVertexId;
-				float weight = aiMeshBone->mWeights[w].mWeight;
+				 UINT vertexId = aiMeshBone->mWeights[w].mVertexId;
+				 float weight = aiMeshBone->mWeights[w].mWeight;
 
-				boneWeights[vertexId].AddWeights(boneIndex, weight);
-			}	// for (w)
-		}	// for (b)
+				 boneWeigts[vertexId].AddWeights(boneIndex, weight);
+			} //for (w)
+		} //for (b)
 
 		//이 가중치를 Normalize -> mesh->Vertices에 저장
-		for (UINT v = 0; v < boneWeights.size(); v++)
+		for (UINT v = 0; v < boneWeigts.size(); v++)
 		{
-			boneWeights[v].Normalize();
+			boneWeigts[v].Normalize();
 
 			asBlendWeight blendWeight;
-			boneWeights[v].GetBlendWeights(blendWeight);
+			boneWeigts[v].GetBlendWeigths(blendWeight);
 
 			mesh->Vertices[v].BlendIndices = blendWeight.Indices;
 			mesh->Vertices[v].BlendWeights = blendWeight.Weights;
 		}
 
 
-	} // for (scene->mNumMeshes)
+	} //for (scene->mNumMeshes)
+
 }
 
 void Converter::WriteMeshData(wstring savePath)
@@ -443,37 +441,36 @@ asClip* Converter::ReadClipData(aiAnimation* animation)
 	clip->FrameCount = (UINT)animation->mDuration + 1;
 
 	vector<asClipNode> aniNodeInfos;
-	for (UINT i = 0; i < animation->mNumChannels; i++)	// node : meshBone, channel : animBone
+	for (UINT i = 0; i < animation->mNumChannels; i++)//node : meshBone, channel : animBone
 	{
-		// Get One Anim Bone
+		//Get One Anim Bone
 		aiNodeAnim* aniNode = animation->mChannels[i];
-		
-		// Save Data to Temp
+
+		//Save Data to Temp
 		asClipNode aniNodeInfo;
 		aniNodeInfo.Name = aniNode->mNodeName;
 
-		// KeyFrame의 갯수
 		UINT keyCount = max(aniNode->mNumPositionKeys, aniNode->mNumRotationKeys);
 		keyCount = max(keyCount, aniNode->mNumScalingKeys);
 
 		asKeyFrameData frameData;
-		for (UINT k = 0; k < keyCount; k++)
+		for (UINT k = 0 ; k < keyCount; k++)
 		{
 			bool bFound = false;
 			UINT t = aniNodeInfo.Keyframe.size();
-
-			// PositionKey
+			
+			//Position Key
 			if (fabsf((float)aniNode->mPositionKeys[k].mTime - (float)t) <= D3DX_16F_EPSILON)
 			{
 				aiVectorKey key = aniNode->mPositionKeys[k];
-				memcpy_s(frameData.Translation, sizeof(Vector3), &key.mValue, sizeof(aiVector3D));
+				memcpy_s(&frameData.Translation, sizeof(Vector3), &key.mValue, sizeof(aiVector3D));
 				frameData.Frame = aniNode->mPositionKeys[k].mTime;
 
 				bFound = true;
 			}
 
-			// RotationKey
-			if (fabsf((float)aniNode->mRotationKeys[k].mTime - (float)t) <= D3DX_16F_EPSILON)
+			//Rotation Key
+			if (fabsf((float)aniNode->mScalingKeys[k].mTime - (float)t) <= D3DX_16F_EPSILON)
 			{
 				aiQuatKey key = aniNode->mRotationKeys[k];
 				frameData.Rotation.x = key.mValue.x;
@@ -481,27 +478,27 @@ asClip* Converter::ReadClipData(aiAnimation* animation)
 				frameData.Rotation.z = key.mValue.z;
 				frameData.Rotation.w = key.mValue.w;
 
-				frameData.Frame = aniNode->mRotationKeys[k].mTime;
-
+				frameData.Frame = aniNode->mScalingKeys[k].mTime;
+				 
 				bFound = true;
 			}
 
-			// ScaleKey
+			//Scaling Key
 			if (fabsf((float)aniNode->mScalingKeys[k].mTime - (float)t) <= D3DX_16F_EPSILON)
 			{
 				aiVectorKey key = aniNode->mScalingKeys[k];
-				memcpy_s(frameData.Scale, sizeof(Vector3), &key.mValue, sizeof(aiVector3D));
+				memcpy_s(&frameData.Scale, sizeof(Vector3), &key.mValue, sizeof(aiVector3D));
 				frameData.Frame = aniNode->mScalingKeys[k].mTime;
 
 				bFound = true;
 			}
 
-
 			if (bFound == true)
 				aniNodeInfo.Keyframe.push_back(frameData);
-		}	// for (anim KeyCount)
 
-		// Find No Exist Key
+		}//for (anim KeyCount)
+
+		//Find No Exist Key
 		if (aniNodeInfo.Keyframe.size() < clip->FrameCount)
 		{
 			UINT count = clip->FrameCount - aniNodeInfo.Keyframe.size();
@@ -513,7 +510,7 @@ asClip* Converter::ReadClipData(aiAnimation* animation)
 
 		aniNodeInfos.push_back(aniNodeInfo);
 
-	}	// for(animBone Count)
+	} //for(animBone Count)
 
 	ReadKeyframeData(clip, scene->mRootNode, aniNodeInfos);
 
@@ -523,7 +520,7 @@ asClip* Converter::ReadClipData(aiAnimation* animation)
 void Converter::ReadKeyframeData(asClip* clip, aiNode* node, vector<struct asClipNode>& aniNodeInfos)
 {
 	asKeyFrame* keyframe = new asKeyFrame();
-	keyframe->BoneName = node->mName.C_Str();	// MeshBone Name
+	keyframe->BoneName = node->mName.C_Str(); //meshBone Name
 
 	asClipNode* asClipNode = nullptr;
 
@@ -538,7 +535,7 @@ void Converter::ReadKeyframeData(asClip* clip, aiNode* node, vector<struct asCli
 
 	for (UINT i = 0; i < clip->FrameCount; i++)
 	{
-		asKeyFrameData frameData;	// 1 Bone, 1 Frame
+		asKeyFrameData frameData; //1 Bone, 1 Frame
 
 		if (asClipNode == nullptr)
 		{
@@ -549,16 +546,15 @@ void Converter::ReadKeyframeData(asClip* clip, aiNode* node, vector<struct asCli
 
 			D3DXMatrixDecompose(&frameData.Scale, &frameData.Rotation, &frameData.Translation, &meshTransform);
 		}
-
 		else
 		{
 			frameData = asClipNode->Keyframe[i];
 		}
 
-		keyframe->Transforms.push_back(frameData);	// 1 Bone, All Frame
+		keyframe->Transforms.push_back(frameData); //1 Bone. All Frame
 	}
 
-	clip->KeyFrames.push_back(keyframe);
+	clip->Keyframes.push_back(keyframe);
 
 	for (UINT i = 0; i < node->mNumChildren; i++)
 		ReadKeyframeData(clip, node->mChildren[i], aniNodeInfos);
@@ -573,9 +569,9 @@ void Converter::WriteClipData(asClip* clip, wstring savePath)
 	w->String(clip->Name);
 	w->Float(clip->FrameRate);
 	w->UInt(clip->FrameCount);
-	
-	w->UInt(clip->KeyFrames.size());
-	for (asKeyFrame* keyframe : clip->KeyFrames)
+
+	w->UInt(clip->Keyframes.size());
+	for (asKeyFrame* keyframe : clip->Keyframes)
 	{
 		w->String(keyframe->BoneName);
 

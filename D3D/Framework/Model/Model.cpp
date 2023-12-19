@@ -15,7 +15,6 @@ Model::~Model()
 
 	for (ModelMesh* mesh : meshes)
 		SafeDelete(mesh);
-	
 
 	for (Material* material : materials)
 		SafeDelete(material);
@@ -129,8 +128,8 @@ void Model::ReadMaterial(wstring file)
 	Xml::XMLError error = document->LoadFile(String::ToString(file).c_str());
 	assert(error == Xml::XML_SUCCESS);
 
-	Xml::XMLElement* root = document->FirstChildElement();		// <Materials>
-	Xml::XMLElement*  materialNode = root->FirstChildElement();		// <Material>
+	Xml::XMLElement* root = document->FirstChildElement(); //<Materials>
+	Xml::XMLElement* materialNode = root->FirstChildElement(); //<Material>
 
 	do
 	{
@@ -138,7 +137,7 @@ void Model::ReadMaterial(wstring file)
 
 		Xml::XMLElement* node = nullptr;
 
-		node = materialNode->FirstChildElement();		// <Name>
+		node = materialNode->FirstChildElement(); //<Name>
 		material->Name(String::ToWString(node->GetText()));
 
 		wstring directory = Path::GetDirectoryName(file);
@@ -146,45 +145,45 @@ void Model::ReadMaterial(wstring file)
 
 		wstring texture = L"";
 
-		node = node->NextSiblingElement();	// <DiffuseFile>
+		node = node->NextSiblingElement(); //<DiffuseFile>
 		texture = String::ToWString(node->GetText());
 		if (texture.length() > 0)
 			material->DiffuseMap(directory + texture);
 
-		node = node->NextSiblingElement();	// <SpecularFile>
+		node = node->NextSiblingElement(); //<SpecularFile>
 		texture = String::ToWString(node->GetText());
 		if (texture.length() > 0)
 			material->SpecularMap(directory + texture);
 
-		node = node->NextSiblingElement();	// <NormalFile>
+		node = node->NextSiblingElement(); //<NormalFile>
 		texture = String::ToWString(node->GetText());
 		if (texture.length() > 0)
 			material->NormalMap(directory + texture);
 
 		Color color;
 
-		node = node->NextSiblingElement();	// <Ambient>
+		node = node->NextSiblingElement(); //<Ambient>
 		color.r = node->FloatAttribute("R");
 		color.g = node->FloatAttribute("G");
 		color.b = node->FloatAttribute("B");
 		color.a = node->FloatAttribute("A");
 		material->Ambient(color);
 
-		node = node->NextSiblingElement();	// <Diffuse>
+		node = node->NextSiblingElement(); //<Diffuse>
 		color.r = node->FloatAttribute("R");
 		color.g = node->FloatAttribute("G");
 		color.b = node->FloatAttribute("B");
 		color.a = node->FloatAttribute("A");
 		material->Diffuse(color);
 
-		node = node->NextSiblingElement();	// <Specular>
+		node = node->NextSiblingElement(); //<Specular>
 		color.r = node->FloatAttribute("R");
 		color.g = node->FloatAttribute("G");
 		color.b = node->FloatAttribute("B");
 		color.a = node->FloatAttribute("A");
 		material->Specular(color);
 
-		node = node->NextSiblingElement();	// <Emissive>
+		node = node->NextSiblingElement(); //<Emissive>
 		color.r = node->FloatAttribute("R");
 		color.g = node->FloatAttribute("G");
 		color.b = node->FloatAttribute("B");
@@ -194,6 +193,7 @@ void Model::ReadMaterial(wstring file)
 		materials.push_back(material);
 
 		materialNode = materialNode->NextSiblingElement();
+
 	} while (materialNode != nullptr);
 
 	BindMesh();
@@ -206,7 +206,6 @@ void Model::ReadClip(wstring file)
 	BinaryReader* r = new BinaryReader(file);
 
 	ModelClip* clip = new ModelClip();
-
 	clip->name = String::ToWString(r->String());
 	clip->frameRate = r->Float();
 	clip->frameCount = r->UInt();
@@ -221,7 +220,7 @@ void Model::ReadClip(wstring file)
 		if (size > 0)
 		{
 			keyframe->Transforms.assign(size, ModelKeyFrameData());
-
+			
 			void* ptr = (void*)&keyframe->Transforms[0];
 			r->Byte(&ptr, sizeof(ModelKeyFrameData) * size);
 		}

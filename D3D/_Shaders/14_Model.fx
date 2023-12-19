@@ -47,10 +47,10 @@ float4 PS(VertexOutput input) : SV_Target
 {
 	float3 normal = normalize(input.Normal);
 	
-    float4 diffuseColor = DiffuseMap.Sample(LinearSampler, input.Uv);
+	float4 diffuseColor = DiffuseMap.Sample(LinearSampler, input.Uv);
 	float lambert = saturate(dot(normal, -LightDirection));
 
-    return diffuseColor * lambert;
+	return diffuseColor * lambert;
 }
 
 technique11 T0

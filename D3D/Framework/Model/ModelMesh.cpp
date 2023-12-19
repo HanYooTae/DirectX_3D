@@ -137,7 +137,7 @@ void ModelMeshPart::Binding(Model* model)
 	material->Emissive(srcMaterial->Emissive());
 
 	if (srcMaterial->DiffuseMap() != nullptr)
-	material->DiffuseMap(srcMaterial->DiffuseMap()->GetFile());
+		material->DiffuseMap(srcMaterial->DiffuseMap()->GetFile());
 
 	if (srcMaterial->SpecularMap() != nullptr)
 		material->SpecularMap(srcMaterial->SpecularMap()->GetFile());

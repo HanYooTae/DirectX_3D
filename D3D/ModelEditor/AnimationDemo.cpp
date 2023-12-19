@@ -32,6 +32,37 @@ void AnimationDemo::Destroy()
 
 void AnimationDemo::Update()
 {
+	//Test
+	static int clip = 0;
+	static float speed = 1.f;
+	static float takeTime = 1.f;
+
+	static bool bBlendMode = false;
+	static float bBlendAlpha = 0.f;
+
+	ImGui::Checkbox("BlendMode", &bBlendMode);
+
+	if (bBlendMode == false)
+	{
+		ImGui::InputInt("Clip", &clip);
+		clip = Math::Clamp(clip, 0, 4);
+
+		ImGui::SliderFloat("Speed", &speed, 0.1f, 5.f);
+		ImGui::SliderFloat("TakeTime", &takeTime, 0.1f, 5.f);
+
+		if (ImGui::Button("Apply"))
+			kachujin->PlayTweenMode(clip, speed, takeTime);
+	}
+
+	else
+	{
+		ImGui::SliderFloat("BlendAlpha", &bBlendAlpha, 0, 2);
+		kachujin->SetBlendAlpha(bBlendAlpha);
+
+		if (ImGui::Button("Apply"))
+			kachujin->PlayBlendMode(0, 1, 2);
+	}
+
 	static Vector3 LightDirection = Vector3(-1, -1, +1);
 	ImGui::SliderFloat3("LightDirection", LightDirection, -1, +1);
 	shader->AsVector("LightDirection")->SetFloatVector(LightDirection);
@@ -49,6 +80,7 @@ void AnimationDemo::Update()
 		kachujin->Pass(pass);
 		kachujin->Update();
 	}
+
 }
 
 void AnimationDemo::Render()
@@ -58,6 +90,7 @@ void AnimationDemo::Render()
 
 	if (kachujin != nullptr)
 		kachujin->Render();
+
 }
 
 void AnimationDemo::Kachujin()
@@ -65,6 +98,7 @@ void AnimationDemo::Kachujin()
 	kachujin = new ModelAnimator(shader);
 	kachujin->ReadMesh(L"Kachujin/Mesh");
 	kachujin->ReadMaterial(L"Kachujin/Mesh");
+	
 	kachujin->ReadClip(L"Kachujin/Idle");
 	kachujin->ReadClip(L"Kachujin/Walk");
 	kachujin->ReadClip(L"Kachujin/Run");
@@ -74,3 +108,4 @@ void AnimationDemo::Kachujin()
 	kachujin->GetTransform()->Position(5, 0, 0);
 	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
 }
+
