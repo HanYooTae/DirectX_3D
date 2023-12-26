@@ -21,8 +21,9 @@
 
 void Main::Initialize()
 {
-	Push(new TextureBufferDemo());
-	Push(new RawBufferDemo());
+	Push(new TerrainDemo());
+	//Push(new TextureBufferDemo());
+	//Push(new RawBufferDemo());
 	//Push(new ThreadDemo());
 	//Push(new CubeMapDemo());
 	//Push(new TerrainDemo());

@@ -84,7 +84,7 @@ void DebugLine::Render()
 DebugLine::DebugLine()
 {
 	shader = new Shader(L"09_DebugLine.fxo");
-	
+
 	vertices = new VertexLine[MAX_DEBUG_LINE];
 	ZeroMemory(vertices, sizeof(VertexLine) * MAX_DEBUG_LINE);
 
