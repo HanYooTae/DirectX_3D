@@ -13,4 +13,4 @@ struct MaterialDesc
 cbuffer CB_Material
 {
 	MaterialDesc Material;
-}
+};

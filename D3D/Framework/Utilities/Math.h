@@ -17,7 +17,7 @@ public:
 	static D3DXVECTOR3 RandomVec3(float r1, float r2);
 	static D3DXCOLOR RandomColor3();
 	static D3DXCOLOR RandomColor4();
-	
+
 	template<typename T>
 	static T Clamp(T value, T min, T max)
 	{

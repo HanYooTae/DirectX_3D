@@ -8,7 +8,7 @@ Transform::Transform()
 	, scale(1, 1, 1)
 	, rotation(0, 0, 0)
 {
-	D3DXMatrixIdentity(&bufferDesc.World);
+	D3DXMatrixIdentity(&bufferDesc.world);
 }
 
 Transform::Transform(Shader* shader)
@@ -16,9 +16,9 @@ Transform::Transform(Shader* shader)
 	, scale(1, 1, 1)
 	, rotation(0, 0, 0)
 {
-	D3DXMatrixIdentity(&bufferDesc.World);
-
 	SetShader(shader);
+
+	D3DXMatrixIdentity(&bufferDesc.world);
 }
 
 Transform::~Transform()
@@ -101,44 +101,53 @@ void Transform::RotationDegree(float x, float y, float z)
 
 void Transform::RotationDegree(Vector3& vec)
 {
-	Vector3 temp;
-	temp.x = Math::ToRadian(vec.x);
-	temp.y = Math::ToRadian(vec.y);
-	temp.z = Math::ToRadian(vec.z);
+	Vector3 radian;
+	radian.x = Math::ToRadian(vec.x);
+	radian.y = Math::ToRadian(vec.y);
+	radian.z = Math::ToRadian(vec.z);
 
-	Rotation(temp);
+	Rotation(radian);
 }
 
 void Transform::RotationDegree(Vector3* vec)
 {
-	Vector3 temp;
-	temp.x = Math::ToDegree(rotation.x);
-	temp.y = Math::ToDegree(rotation.y);
-	temp.z = Math::ToDegree(rotation.z);
+	Vector3 degree;
+	degree.x = Math::ToDegree(rotation.x);
+	degree.y = Math::ToDegree(rotation.y);
+	degree.z = Math::ToDegree(rotation.z);
 
-	*vec = temp;
-}
-
-Vector3 Transform::Right()
-{
-	return Vector3(bufferDesc.World._11, bufferDesc.World._12, bufferDesc.World._13);
-}
-
-Vector3 Transform::Up()
-{
-	return Vector3(bufferDesc.World._21, bufferDesc.World._22, bufferDesc.World._23);
+	*vec = degree;
 }
 
 Vector3 Transform::Forward()
 {
-	return Vector3(bufferDesc.World._31, bufferDesc.World._32, bufferDesc.World._33);
+	Vector3 forward = Vector3(bufferDesc.world._31, bufferDesc.world._32, bufferDesc.world._33);
+	D3DXVec3Normalize(&forward, &forward);
+
+	return forward;
+}
+
+Vector3 Transform::Up()
+{
+	Vector3 up = Vector3(bufferDesc.world._21, bufferDesc.world._22, bufferDesc.world._23);
+	D3DXVec3Normalize(&up, &up);
+
+	return up;
+}
+
+Vector3 Transform::Right()
+{
+	Vector3 right = Vector3(bufferDesc.world._11, bufferDesc.world._12, bufferDesc.world._13);
+	D3DXVec3Normalize(&right, &right);
+
+	return right;
 }
 
 void Transform::World(Matrix& matrix)
 {
-	Math::MatrixDecompose(bufferDesc.World, scale, rotation, position);
+	Math::MatrixDecompose(bufferDesc.world, scale, rotation, position);
 
-	bufferDesc.World = matrix;
+	bufferDesc.world = matrix;
 }
 
 void Transform::UpdateWorld()
@@ -148,8 +157,7 @@ void Transform::UpdateWorld()
 	D3DXMatrixRotationYawPitchRoll(&R, rotation.y, rotation.x, rotation.z);
 	D3DXMatrixTranslation(&T, position.x, position.y, position.z);
 
-	Matrix world = S * R * T;
-	bufferDesc.World = world;
+	bufferDesc.world = S * R * T;
 }
 
 void Transform::Update()
@@ -160,7 +168,6 @@ void Transform::Render()
 {
 	if (shader == nullptr) return;
 
-	buffer->Render();
+	buffer->Map();
 	sBuffer->SetConstantBuffer(buffer->Buffer());
-	
 }

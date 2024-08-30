@@ -8,6 +8,7 @@ public:
 	~Transform();
 
 	void Set(Transform* transform);
+
 	void SetShader(Shader* shader);
 
 	void Position(float x, float y, float z);
@@ -26,12 +27,12 @@ public:
 	void RotationDegree(Vector3& vec);
 	void RotationDegree(Vector3* vec);
 
-	Vector3 Right();
-	Vector3 Up();
 	Vector3 Forward();
+	Vector3 Up();
+	Vector3 Right();
 
 	void World(Matrix& matrix);
-	Matrix& World() {	return bufferDesc.World; }
+	Matrix& World() { return bufferDesc.world; }
 
 private:
 	void UpdateWorld();
@@ -43,9 +44,8 @@ public:
 private:
 	struct BufferDesc
 	{
-		Matrix World;
+		Matrix world;
 	} bufferDesc;
-
 
 private:
 	Shader* shader;

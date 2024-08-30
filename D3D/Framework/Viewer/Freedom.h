@@ -3,12 +3,14 @@
 class Freedom : public Camera
 {
 public:
-	virtual void Update() override;
+	Freedom() = default;
+	~Freedom() = default;
 
-	void Speed(float moveSpeed, float rotationSpeed = 2.f);
+	void Update() override;
+
+	void Speed(float moveSpeed, float rotationSpeed = 5.f);
 
 private:
 	float moveSpeed = 20.f;
-	float rotationSpeed = 2.f;
-
+	float rotationSpeed = 5.f;
 };

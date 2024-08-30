@@ -5,9 +5,9 @@ void Freedom::Update()
 {
 	if (Mouse::Get()->Press(1) == false) return;
 
-	Vector3 right = Right();
-	Vector3 up = Up();
 	Vector3 forward = Forward();
+	Vector3 up = Up();
+	Vector3 right = Right();
 
 	//Move
 	{
@@ -32,14 +32,16 @@ void Freedom::Update()
 		Position(position);
 	}
 
+
 	//Rotation
 	{
 		Vector3 rotation;
 		Rotation(&rotation);
 
-		Vector3 mouseAxis = Mouse::Get()->GetMoveValue();
-		rotation.x += mouseAxis.y * rotationSpeed* Time::Delta();
-		rotation.y += mouseAxis.x * rotationSpeed* Time::Delta();
+		Vector3 mouse = Mouse::Get()->GetMoveValue();
+
+		rotation.x += mouse.y * rotationSpeed* Time::Delta();
+		rotation.y += mouse.x * rotationSpeed* Time::Delta();
 		rotation.z = 0.f;
 
 		Rotation(rotation);

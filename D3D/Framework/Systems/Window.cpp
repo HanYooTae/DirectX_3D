@@ -28,7 +28,6 @@ WPARAM Window::Run(IExecute * main)
 
 	MSG msg = { 0 };
 	while (true)
-
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -45,7 +44,6 @@ WPARAM Window::Run(IExecute * main)
 	}
 	mainExecute->Destroy();
 
-	
 	DebugLine::Delete();
 	Context::Delete();
 	Gui::Delete();

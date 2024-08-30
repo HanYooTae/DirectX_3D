@@ -37,7 +37,7 @@ public:
 	void SpecularMap(string file);
 	void SpecularMap(wstring file);
 
-	Texture*& NormalMap() { return normalMap; }
+	Texture* NormalMap() { return normalMap; }
 	void NormalMap(string file);
 	void NormalMap(wstring file);
 
@@ -49,10 +49,10 @@ private:
 private:
 	struct ColorDesc
 	{
-		Color Ambient = Color(0, 0, 0, 0);
+		Color Ambient = Color(0, 0, 0, 1);
 		Color Diffuse = Color(1, 1, 1, 1);
-		Color Specular = Color(0, 0, 0, 0);
-		Color Emissive = Color(0, 0, 0, 0);
+		Color Specular = Color(0, 0, 0, 1);
+		Color Emissive = Color(0, 0, 0, 1);
 	} colorDesc;
 
 private:
@@ -60,12 +60,12 @@ private:
 
 	wstring name;
 
+	ConstantBuffer* buffer;
+	ID3DX11EffectConstantBuffer* sBuffer;
+
 	Texture* diffuseMap;
 	Texture* specularMap;
 	Texture* normalMap;
-
-	ConstantBuffer* buffer;
-	ID3DX11EffectConstantBuffer* sBuffer;
 
 	ID3DX11EffectShaderResourceVariable* sDiffuseMap;
 	ID3DX11EffectShaderResourceVariable* sSpecularMap;

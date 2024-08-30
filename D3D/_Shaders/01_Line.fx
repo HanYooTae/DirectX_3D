@@ -8,18 +8,17 @@ struct VertexOutput
 	float4 Position : SV_Position;
 };
 
-
 VertexOutput VS(VertexInput input)
 {
 	VertexOutput output;
 	output.Position = input.Position;
-
+	
 	return output;
 }
 
 float4 PS(VertexOutput input) : SV_Target
 {
-	return float4(0, 0, 1, 1);
+	return float4(1, 0, 0, 1);
 }
 
 technique11 T0

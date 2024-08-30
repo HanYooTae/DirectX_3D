@@ -13,6 +13,7 @@ Material::Material(Shader* shader)
 	SetShader(shader);
 }
 
+
 void Material::Initialize()
 {
 	name = L"";
@@ -23,6 +24,7 @@ void Material::Initialize()
 
 	buffer = new ConstantBuffer(&colorDesc, sizeof(ColorDesc));
 }
+
 
 Material::~Material()
 {
@@ -115,21 +117,21 @@ void Material::NormalMap(string file)
 
 void Material::NormalMap(wstring file)
 {
-	SafeDelete(normalMap);
+	SafeDelete(specularMap);
 
 	normalMap = new Texture(file);
 }
 
 void Material::Render()
 {
-	buffer->Render();
+	buffer->Map();
 	sBuffer->SetConstantBuffer(buffer->Buffer());
 
 	if (diffuseMap != nullptr)
 		sDiffuseMap->SetResource(diffuseMap->SRV());
 	else
 		sDiffuseMap->SetResource(nullptr);
-	
+
 	if (specularMap != nullptr)
 		sSpecularMap->SetResource(specularMap->SRV());
 	else
@@ -140,4 +142,3 @@ void Material::Render()
 	else
 		sNormalMap->SetResource(nullptr);
 }
-

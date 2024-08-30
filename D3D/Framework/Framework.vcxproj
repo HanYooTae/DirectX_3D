@@ -19,34 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Environment\CubeSky.cpp" />
+    <ClCompile Include="Environment\Sky.cpp" />
     <ClCompile Include="Environment\Terrain.cpp" />
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Meshes\Mesh.cpp" />
-    <ClCompile Include="Meshes\MeshCube.cpp" />
-    <ClCompile Include="Meshes\MeshCylinder.cpp" />
-    <ClCompile Include="Meshes\MeshPlane.cpp" />
-    <ClCompile Include="Meshes\MeshQuad.cpp" />
-    <ClCompile Include="Meshes\MeshSphere.cpp" />
-    <ClCompile Include="Model\Model.cpp" />
-    <ClCompile Include="Model\ModelAnimator.cpp" />
-    <ClCompile Include="Model\ModelClip.cpp" />
-    <ClCompile Include="Model\ModelMesh.cpp" />
-    <ClCompile Include="Model\ModelRender.cpp" />
-    <ClCompile Include="Objects\Canvas.cpp" />
-    <ClCompile Include="Objects\Collider.cpp" />
-    <ClCompile Include="Objects\CubeMap.cpp" />
     <ClCompile Include="Renders\Buffers.cpp" />
+    <ClCompile Include="Renders\Collider.cpp" />
     <ClCompile Include="Renders\Context.cpp" />
     <ClCompile Include="Renders\DebugLine.cpp" />
     <ClCompile Include="Renders\Material.cpp" />
     <ClCompile Include="Renders\PerFrame.cpp" />
-    <ClCompile Include="Renders\Renderer.cpp" />
     <ClCompile Include="Renders\Shader.cpp" />
+    <ClCompile Include="Renders\StaticMeshRenderer.cpp" />
     <ClCompile Include="Renders\Texture.cpp" />
     <ClCompile Include="Renders\Transform.cpp" />
+    <ClCompile Include="SkeletalMeshes\SkeletalMesh.cpp" />
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshAnimator.cpp" />
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshClip.cpp" />
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshMesh.cpp" />
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshRenderer.cpp" />
+    <ClCompile Include="StaticMeshes\CubeMapMesh.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh_Cube.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh_Cylinder.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh_Plane.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh_Quad.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh_Sphere.cpp" />
     <ClCompile Include="Systems\D3D.cpp" />
     <ClCompile Include="Systems\Gui.cpp" />
     <ClCompile Include="Systems\Keyboard.cpp" />
@@ -59,6 +58,7 @@
     <ClCompile Include="Utilities\String.cpp" />
     <ClCompile Include="Utilities\Xml.cpp" />
     <ClCompile Include="Viewer\Camera.cpp" />
+    <ClCompile Include="Viewer\Canvas.cpp" />
     <ClCompile Include="Viewer\Freedom.cpp" />
     <ClCompile Include="Viewer\Orthographic.cpp" />
     <ClCompile Include="Viewer\Perspective.cpp" />
@@ -66,32 +66,31 @@
     <ClCompile Include="Viewer\Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Environment\CubeSky.h" />
+    <ClInclude Include="Environment\Sky.h" />
     <ClInclude Include="Environment\Terrain.h" />
     <ClInclude Include="Framework.h" />
-    <ClInclude Include="Meshes\Mesh.h" />
-    <ClInclude Include="Meshes\MeshCube.h" />
-    <ClInclude Include="Meshes\MeshCylinder.h" />
-    <ClInclude Include="Meshes\MeshPlane.h" />
-    <ClInclude Include="Meshes\MeshQuad.h" />
-    <ClInclude Include="Meshes\MeshSphere.h" />
-    <ClInclude Include="Model\Model.h" />
-    <ClInclude Include="Model\ModelAnimator.h" />
-    <ClInclude Include="Model\ModelClip.h" />
-    <ClInclude Include="Model\ModelMesh.h" />
-    <ClInclude Include="Model\ModelRender.h" />
-    <ClInclude Include="Objects\Canvas.h" />
-    <ClInclude Include="Objects\Collider.h" />
-    <ClInclude Include="Objects\CubeMap.h" />
     <ClInclude Include="Renders\Buffers.h" />
+    <ClInclude Include="Renders\Collider.h" />
     <ClInclude Include="Renders\Context.h" />
     <ClInclude Include="Renders\DebugLine.h" />
     <ClInclude Include="Renders\Material.h" />
     <ClInclude Include="Renders\PerFrame.h" />
-    <ClInclude Include="Renders\Renderer.h" />
     <ClInclude Include="Renders\Shader.h" />
+    <ClInclude Include="Renders\StaticMeshRenderer.h" />
     <ClInclude Include="Renders\Texture.h" />
     <ClInclude Include="Renders\Transform.h" />
+    <ClInclude Include="SkeletalMeshes\SkeletalMesh.h" />
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshAnimator.h" />
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshClip.h" />
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshMesh.h" />
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshRenderer.h" />
+    <ClInclude Include="StaticMeshes\CubeMapMesh.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh_Cube.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh_Cylinder.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh_Plane.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh_Quad.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh_Sphere.h" />
     <ClInclude Include="Systems\D3D.h" />
     <ClInclude Include="Systems\Gui.h" />
     <ClInclude Include="Systems\IExecute.h" />
@@ -105,6 +104,7 @@
     <ClInclude Include="Utilities\String.h" />
     <ClInclude Include="Utilities\Xml.h" />
     <ClInclude Include="Viewer\Camera.h" />
+    <ClInclude Include="Viewer\Canvas.h" />
     <ClInclude Include="Viewer\Freedom.h" />
     <ClInclude Include="Viewer\Orthographic.h" />
     <ClInclude Include="Viewer\Perspective.h" />
@@ -114,7 +114,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{27f66c4e-cb87-4f60-a630-b3d48b6724e0}</ProjectGuid>
+    <ProjectGuid>{cca8113a-336a-47b3-a9ff-b04e6ea73448}</ProjectGuid>
     <RootNamespace>Framework</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -152,6 +152,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Microsoft.Cpp.Win32.user.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -165,12 +166,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DH)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(DL)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DH);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(DL);</LibraryPath>
     <IntDir>$(SolutionDir)Debug_$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DH);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(DL);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -186,7 +189,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Framework.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;../../_Libraries/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../../_Libraries/;../Framework/</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -195,7 +198,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>../../_Libraries/;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../_Libraries/</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -208,6 +211,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>./;../../_Libraries/;../Framework/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -216,6 +220,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>../../_Libraries/</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

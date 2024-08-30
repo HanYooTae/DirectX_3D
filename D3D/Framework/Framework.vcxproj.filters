@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Renders\Context.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
@@ -29,12 +28,6 @@
     <ClCompile Include="Systems\Window.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\BinaryFile.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\Math.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\Path.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
@@ -42,6 +35,12 @@
       <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Xml.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\BinaryFile.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Math.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Viewer\Orthographic.cpp">
@@ -56,6 +55,7 @@
     <ClCompile Include="Viewer\Viewport.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
+    <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Viewer\Camera.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
@@ -68,28 +68,28 @@
     <ClCompile Include="Renders\DebugLine.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
-    <ClCompile Include="Meshes\Mesh.cpp">
-      <Filter>Meshes</Filter>
+    <ClCompile Include="StaticMeshes\StaticMesh.cpp">
+      <Filter>StaticMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Meshes\MeshQuad.cpp">
-      <Filter>Meshes</Filter>
+    <ClCompile Include="StaticMeshes\StaticMesh_Quad.cpp">
+      <Filter>StaticMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Meshes\MeshPlane.cpp">
-      <Filter>Meshes</Filter>
+    <ClCompile Include="StaticMeshes\StaticMesh_Plane.cpp">
+      <Filter>StaticMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Meshes\MeshCube.cpp">
-      <Filter>Meshes</Filter>
+    <ClCompile Include="StaticMeshes\StaticMesh_Cube.cpp">
+      <Filter>StaticMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Meshes\MeshCylinder.cpp">
-      <Filter>Meshes</Filter>
+    <ClCompile Include="StaticMeshes\StaticMesh_Cylinder.cpp">
+      <Filter>StaticMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Meshes\MeshSphere.cpp">
-      <Filter>Meshes</Filter>
+    <ClCompile Include="StaticMeshes\StaticMesh_Sphere.cpp">
+      <Filter>StaticMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CubeMap.cpp">
-      <Filter>Objects</Filter>
+    <ClCompile Include="StaticMeshes\CubeMapMesh.cpp">
+      <Filter>StaticMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Environment\CubeSky.cpp">
+    <ClCompile Include="Environment\Sky.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
     <ClCompile Include="Renders\Buffers.cpp">
@@ -101,58 +101,55 @@
     <ClCompile Include="Renders\PerFrame.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
-    <ClCompile Include="Renders\Renderer.cpp">
+    <ClCompile Include="Renders\StaticMeshRenderer.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
-    <ClCompile Include="Model\Model.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="SkeletalMeshes\SkeletalMesh.cpp">
+      <Filter>SkeletalMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Model\ModelMesh.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshMesh.cpp">
+      <Filter>SkeletalMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Model\ModelRender.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshRenderer.cpp">
+      <Filter>SkeletalMeshes</Filter>
     </ClCompile>
     <ClCompile Include="Renders\Material.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
-    <ClCompile Include="Model\ModelClip.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshClip.cpp">
+      <Filter>SkeletalMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Model\ModelAnimator.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshAnimator.cpp">
+      <Filter>SkeletalMeshes</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Canvas.cpp">
-      <Filter>Objects</Filter>
+    <ClCompile Include="Viewer\Canvas.cpp">
+      <Filter>Viewer</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Collider.cpp">
-      <Filter>Objects</Filter>
+    <ClCompile Include="Renders\Collider.cpp">
+      <Filter>Renders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
-      <UniqueIdentifier>{77611a15-f6b5-4ed4-9bd4-df273ced35b9}</UniqueIdentifier>
+      <UniqueIdentifier>{34400cdd-d4be-415a-850e-934fd848361e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Systems">
-      <UniqueIdentifier>{d88a3e54-3760-4025-bbe0-bdc8a098af54}</UniqueIdentifier>
+      <UniqueIdentifier>{6e112a08-74e8-4991-aba5-18a4026d8cbc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utilities">
-      <UniqueIdentifier>{057b17ac-f128-4241-84dd-29f5417c6827}</UniqueIdentifier>
+      <UniqueIdentifier>{da720dd5-2244-4ebe-9494-33d078048cbd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Viewer">
-      <UniqueIdentifier>{ec8269a0-9018-45a5-8c46-7bfeb68c4c3d}</UniqueIdentifier>
+      <UniqueIdentifier>{b8f4ac24-d70b-4e56-88c5-d30307e63406}</UniqueIdentifier>
     </Filter>
     <Filter Include="Environment">
-      <UniqueIdentifier>{50007ca3-ceac-4cd7-a31f-eb51e1e95e07}</UniqueIdentifier>
+      <UniqueIdentifier>{a2237272-5b7c-4cb8-98e3-f66ae7208aeb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Meshes">
-      <UniqueIdentifier>{9a5bae92-0de5-4ed4-b386-9307706f9d34}</UniqueIdentifier>
+    <Filter Include="StaticMeshes">
+      <UniqueIdentifier>{ae93a525-ace3-4f01-b1a5-d6b397ee39e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects">
-      <UniqueIdentifier>{2db3c3ff-5312-478a-81b2-4bd1dd07093c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Model">
-      <UniqueIdentifier>{0d5bf85d-d50c-4476-8fe1-e030f5459e5b}</UniqueIdentifier>
+    <Filter Include="SkeletalMeshes">
+      <UniqueIdentifier>{04d643be-4590-4cb6-8747-1d86c4191d30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,12 +183,6 @@
     <ClInclude Include="Systems\Window.h">
       <Filter>Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\BinaryFile.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\Math.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Path.h">
       <Filter>Utilities</Filter>
     </ClInclude>
@@ -199,6 +190,12 @@
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\Xml.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\BinaryFile.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Math.h">
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Viewer\Orthographic.h">
@@ -226,28 +223,28 @@
     <ClInclude Include="Renders\DebugLine.h">
       <Filter>Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Meshes\Mesh.h">
-      <Filter>Meshes</Filter>
+    <ClInclude Include="StaticMeshes\StaticMesh.h">
+      <Filter>StaticMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Meshes\MeshQuad.h">
-      <Filter>Meshes</Filter>
+    <ClInclude Include="StaticMeshes\StaticMesh_Quad.h">
+      <Filter>StaticMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Meshes\MeshPlane.h">
-      <Filter>Meshes</Filter>
+    <ClInclude Include="StaticMeshes\StaticMesh_Plane.h">
+      <Filter>StaticMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Meshes\MeshCube.h">
-      <Filter>Meshes</Filter>
+    <ClInclude Include="StaticMeshes\StaticMesh_Cube.h">
+      <Filter>StaticMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Meshes\MeshCylinder.h">
-      <Filter>Meshes</Filter>
+    <ClInclude Include="StaticMeshes\StaticMesh_Cylinder.h">
+      <Filter>StaticMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Meshes\MeshSphere.h">
-      <Filter>Meshes</Filter>
+    <ClInclude Include="StaticMeshes\StaticMesh_Sphere.h">
+      <Filter>StaticMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CubeMap.h">
-      <Filter>Objects</Filter>
+    <ClInclude Include="StaticMeshes\CubeMapMesh.h">
+      <Filter>StaticMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Environment\CubeSky.h">
+    <ClInclude Include="Environment\Sky.h">
       <Filter>Environment</Filter>
     </ClInclude>
     <ClInclude Include="Renders\Buffers.h">
@@ -259,32 +256,32 @@
     <ClInclude Include="Renders\PerFrame.h">
       <Filter>Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Renders\Renderer.h">
+    <ClInclude Include="Renders\StaticMeshRenderer.h">
       <Filter>Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Model\Model.h">
-      <Filter>Model</Filter>
+    <ClInclude Include="SkeletalMeshes\SkeletalMesh.h">
+      <Filter>SkeletalMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Model\ModelMesh.h">
-      <Filter>Model</Filter>
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshMesh.h">
+      <Filter>SkeletalMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Model\ModelRender.h">
-      <Filter>Model</Filter>
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshRenderer.h">
+      <Filter>SkeletalMeshes</Filter>
     </ClInclude>
     <ClInclude Include="Renders\Material.h">
       <Filter>Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Model\ModelClip.h">
-      <Filter>Model</Filter>
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshClip.h">
+      <Filter>SkeletalMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Model\ModelAnimator.h">
-      <Filter>Model</Filter>
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshAnimator.h">
+      <Filter>SkeletalMeshes</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Canvas.h">
-      <Filter>Objects</Filter>
+    <ClInclude Include="Viewer\Canvas.h">
+      <Filter>Viewer</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Collider.h">
-      <Filter>Objects</Filter>
+    <ClInclude Include="Renders\Collider.h">
+      <Filter>Renders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

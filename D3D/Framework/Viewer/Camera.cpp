@@ -3,16 +3,13 @@
 
 Camera::Camera()
 {
-	D3DXMatrixIdentity(&matView);
 	D3DXMatrixIdentity(&matRotation);
+	D3DXMatrixIdentity(&matView);
 
 	Rotation();
-	View();
+	Move();
 }
 
-Camera::~Camera()
-{
-}
 
 void Camera::Position(float x, float y, float z)
 {
@@ -55,14 +52,14 @@ void Camera::RotationDegree(float x, float y, float z)
 
 void Camera::RotationDegree(Vector3& vec)
 {
-	rotation = vec * 0.01745328f; //PI / 180
+	rotation = vec * 0.017453f;
 
 	Rotation(rotation);
 }
 
 void Camera::RotationDegree(Vector3* vec)
 {
-	*vec = rotation * 57.29577957f;
+	*vec = rotation * 57.29579f;
 }
 
 void Camera::GetMatrix(Matrix* matrix)
@@ -74,9 +71,10 @@ void Camera::Rotation()
 {
 	D3DXMatrixRotationYawPitchRoll(&matRotation, rotation.y, rotation.x, rotation.z);
 
+	D3DXVec3TransformNormal(&forward, &Vector3(0, 0, 1), &matRotation);
 	D3DXVec3TransformNormal(&right, &Vector3(1, 0, 0), &matRotation);
 	D3DXVec3TransformNormal(&up, &Vector3(0, 1, 0), &matRotation);
-	D3DXVec3TransformNormal(&forward, &Vector3(0, 0, 1), &matRotation);
+
 }
 
 void Camera::Move()

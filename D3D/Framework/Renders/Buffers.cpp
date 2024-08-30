@@ -2,7 +2,7 @@
 #include "Buffers.h"
 
 //-----------------------------------------------------------------------------
-// VertexBuffer
+//VertexBuffer
 //-----------------------------------------------------------------------------
 VertexBuffer::VertexBuffer(void* data, UINT count, UINT stride, UINT slot, bool bCpuWrite, bool bGpuWrite)
 	: data(data)
@@ -16,7 +16,7 @@ VertexBuffer::VertexBuffer(void* data, UINT count, UINT stride, UINT slot, bool 
 	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
 	desc.ByteWidth = stride * count;
 	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
+	
 	if (bCpuWrite == false && bGpuWrite == false)
 	{
 		desc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -33,8 +33,9 @@ VertexBuffer::VertexBuffer(void* data, UINT count, UINT stride, UINT slot, bool 
 	else
 	{
 		desc.Usage = D3D11_USAGE_STAGING;
-		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE | D3D11_CPU_ACCESS_READ;
+		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	}
+
 
 	D3D11_SUBRESOURCE_DATA subResource = { 0 };
 	subResource.pSysMem = data;
@@ -47,14 +48,15 @@ VertexBuffer::~VertexBuffer()
 	SafeRelease(buffer);
 }
 
-void VertexBuffer::Render()
+void VertexBuffer::IASet()
 {
 	UINT offset = 0;
+
 	D3D::GetDC()->IASetVertexBuffers(slot, 1, &buffer, &stride, &offset);
 }
 
 //-----------------------------------------------------------------------------
-// IndexBuffer
+//IndexBuffer
 //-----------------------------------------------------------------------------
 IndexBuffer::IndexBuffer(void* data, UINT count)
 	: data(data)
@@ -77,13 +79,13 @@ IndexBuffer::~IndexBuffer()
 	SafeRelease(buffer);
 }
 
-void IndexBuffer::Render()
+void IndexBuffer::IASet()
 {
 	D3D::GetDC()->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, 0);
 }
 
 //-----------------------------------------------------------------------------
-// ConstantBuffer
+//ConstantBuffer
 //-----------------------------------------------------------------------------
 ConstantBuffer::ConstantBuffer(void* data, UINT dataSize)
 	: data(data)
@@ -104,20 +106,24 @@ ConstantBuffer::~ConstantBuffer()
 	SafeRelease(buffer);
 }
 
-void ConstantBuffer::Render()
+void ConstantBuffer::Map()
 {
-	D3D11_MAPPED_SUBRESOURCE subResource;
-	D3D::GetDC()->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
+	D3D11_MAPPED_SUBRESOURCE subRsource;
+	D3D::GetDC()->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subRsource);
 	{
-		memcpy(subResource.pData, data, dataSize);
+		memcpy(subRsource.pData, data, dataSize);
 	}
 	D3D::GetDC()->Unmap(buffer, 0);
 }
 
 //-----------------------------------------------------------------------------
-// Compute Buffer(Super)
+//CsResource(Super)
 //-----------------------------------------------------------------------------
-ComputeBuffer::~ComputeBuffer()
+CsResource::CsResource()
+{
+}
+
+CsResource::~CsResource()
 {
 	SafeRelease(input);
 	SafeRelease(srv);
@@ -126,7 +132,7 @@ ComputeBuffer::~ComputeBuffer()
 	SafeRelease(uav);
 }
 
-void ComputeBuffer::CreateBuffer()
+void CsResource::CreateBuffer()
 {
 	CreateInput();
 	CreateSRV();
@@ -136,11 +142,10 @@ void ComputeBuffer::CreateBuffer()
 }
 
 //-----------------------------------------------------------------------------
-// RawBuffer(C++), ByteAddress(HLSL)
+//CsResource(Super)
 //-----------------------------------------------------------------------------
-
-RawBuffer::RawBuffer(void* inputData, UINT inputByte, UINT outputByte)
-	: inputData(inputData)
+RawBuffer::RawBuffer(void* data, UINT inputByte, UINT outputByte)
+	: inputData(data)
 	, inputByte(inputByte)
 	, outputByte(outputByte)
 {
@@ -246,9 +251,8 @@ void RawBuffer::CopyFromOutput(void* data)
 	}
 	D3D::GetDC()->Unmap(output, 0);
 }
-
 //-----------------------------------------------------------------------------
-// TextureBuffer
+//TextureBuffer
 //-----------------------------------------------------------------------------
 TextureBuffer::TextureBuffer(ID3D11Texture2D* src)
 {
@@ -274,14 +278,14 @@ TextureBuffer::TextureBuffer(ID3D11Texture2D* src)
 	Check(D3D::GetDevice()->CreateTexture2D(&desc, nullptr, &texture));
 	D3D::GetDC()->CopyResource(texture, src);
 
-	input = texture;
+	input = (ID3D11Resource*)texture;
 
 	CreateBuffer();
 
 	((ID3D11Texture2D*)output)->GetDesc(&desc);
 	desc.Usage = D3D11_USAGE_STAGING;
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-	desc.BindFlags = 0;
+	desc.BindFlags = 0; //SRV, RTV 둘 다 사용 X
 	desc.MiscFlags = 0;
 
 	Check(D3D::GetDevice()->CreateTexture2D(&desc, nullptr, &result));
@@ -306,12 +310,12 @@ void TextureBuffer::CreateSRV()
 	srvDesc.Texture2DArray.MipLevels = 1;
 	srvDesc.Texture2DArray.ArraySize = arraySize;
 
-	Check(D3D::GetDevice()->CreateShaderResourceView(texture, &srvDesc, &srv));
+	Check(D3D::GetDevice()->CreateShaderResourceView(texture, &srvDesc, &srv))
 }
 
 void TextureBuffer::CreateOutput()
 {
-	ID3D11Texture2D* texture;
+	ID3D11Texture2D* texture = nullptr;
 
 	D3D11_TEXTURE2D_DESC desc;
 	ZeroMemory(&desc, sizeof(D3D11_TEXTURE2D_DESC));
@@ -325,11 +329,12 @@ void TextureBuffer::CreateOutput()
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 	Check(D3D::GetDevice()->CreateTexture2D(&desc, nullptr, &texture));
 
-	output = texture;
+	output = (ID3D11Resource*)texture;
 
+	//output 텍스쳐를 다시 렌더링 파이프라인으로 보내기 위함
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 	ZeroMemory(&srvDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
-	srvDesc.Format = format;
+	srvDesc.Format = desc.Format;
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
 	srvDesc.Texture2DArray.MipLevels = 1;
 	srvDesc.Texture2DArray.ArraySize = arraySize;
@@ -341,17 +346,19 @@ void TextureBuffer::CreateUAV()
 {
 	ID3D11Texture2D* texture = (ID3D11Texture2D*)output;
 
+
 	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
 	ZeroMemory(&uavDesc, sizeof(D3D11_UNORDERED_ACCESS_VIEW_DESC));
-	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
+	uavDesc.Format = DXGI_FORMAT_UNKNOWN; //포맷은 텍스쳐마다 다르다
 	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2DARRAY;
 	uavDesc.Texture2DArray.ArraySize = arraySize;
 
-	Check(D3D::GetDevice()->CreateUnorderedAccessView(texture, &uavDesc, &uav));
+	Check(D3D::GetDevice()->CreateUnorderedAccessView(texture, &uavDesc, &uav))
 }
 
 void TextureBuffer::CopyToInput(ID3D11Texture2D* texture)
 {
+	//텍스쳐 복사는 DX 함수 사용
 	D3D::GetDC()->CopyResource(input, texture);
 }
 
@@ -362,9 +369,8 @@ ID3D11Texture2D* TextureBuffer::CopyFromOutput()
 	return result;
 }
 
-
 //-----------------------------------------------------------------------------
-// TextureBuffer
+//StructuredBuffer
 //-----------------------------------------------------------------------------
 StructuredBuffer::StructuredBuffer(void* inputData, UINT inputStride, UINT inputCount, UINT outputStride, UINT outputCount)
 	: inputData(inputData)
@@ -392,6 +398,7 @@ void StructuredBuffer::CreateInput()
 
 	D3D11_BUFFER_DESC desc;
 	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
+
 	desc.ByteWidth = InputByteWidth();
 	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
@@ -404,21 +411,20 @@ void StructuredBuffer::CreateInput()
 
 	Check(D3D::GetDevice()->CreateBuffer(&desc, inputData != nullptr ? &subResource : nullptr, &buffer));
 
-
-	input = buffer;
+	input = (ID3D11Resource*)buffer;
 }
 
 void StructuredBuffer::CreateSRV()
 {
 	ID3D11Buffer* buffer = (ID3D11Buffer*)input;
 
-	D3D11_SHADER_RESOURCE_VIEW_DESC desc;
-	ZeroMemory(&desc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
-	desc.Format = DXGI_FORMAT_UNKNOWN;
-	desc.ViewDimension = D3D11_SRV_DIMENSION_BUFFEREX;
-	desc.BufferEx.NumElements = inputCount;
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	ZeroMemory(&srvDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFEREX;
+	srvDesc.BufferEx.NumElements = inputCount;
 
-	Check(D3D::GetDevice()->CreateShaderResourceView(buffer, &desc, &srv));
+	Check(D3D::GetDevice()->CreateShaderResourceView(buffer, &srvDesc, &srv));
 }
 
 void StructuredBuffer::CreateOutput()
@@ -427,6 +433,7 @@ void StructuredBuffer::CreateOutput()
 
 	D3D11_BUFFER_DESC desc;
 	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
+
 	desc.ByteWidth = OutputByteWidth();
 	desc.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
 	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
@@ -435,20 +442,24 @@ void StructuredBuffer::CreateOutput()
 
 	Check(D3D::GetDevice()->CreateBuffer(&desc, nullptr, &buffer));
 
-	output = buffer;
+	output = (ID3D11Resource*)buffer;
 }
 
 void StructuredBuffer::CreateUAV()
 {
 	ID3D11Buffer* buffer = (ID3D11Buffer*)output;
 
-	D3D11_UNORDERED_ACCESS_VIEW_DESC desc;
-	ZeroMemory(&desc, sizeof(D3D11_UNORDERED_ACCESS_VIEW_DESC));
-	desc.Format = DXGI_FORMAT_UNKNOWN;
-	desc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
-	desc.Buffer.NumElements = outputCount;
+	D3D11_BUFFER_DESC desc;
+	buffer->GetDesc(&desc);
 
-	Check(D3D::GetDevice()->CreateUnorderedAccessView(buffer, &desc, &uav));
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
+	ZeroMemory(&uavDesc, sizeof(D3D11_UNORDERED_ACCESS_VIEW_DESC));
+	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
+	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+	uavDesc.Buffer.NumElements = outputCount;
+
+	Check(D3D::GetDevice()->CreateUnorderedAccessView(buffer, &uavDesc, &uav));
 }
 
 void StructuredBuffer::CopyToInput(void* data)

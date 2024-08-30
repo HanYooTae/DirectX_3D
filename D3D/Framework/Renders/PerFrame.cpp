@@ -21,11 +21,11 @@ void PerFrame::Update()
 	D3DXMatrixInverse(&desc.ViewInverse, nullptr, &desc.View);
 
 	desc.Projection = Context::Get()->Projection();
-	desc.VP = desc.View * desc.Projection;
+	desc.VP = desc.View * desc.Padding;
 }
 
 void PerFrame::Render()
 {
-	buffer->Render();
+	buffer->Map();
 	sBuffer->SetConstantBuffer(buffer->Buffer());
 }

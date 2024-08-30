@@ -1,7 +1,7 @@
 #pragma once
 
 //-----------------------------------------------------------------------------
-// VertexBuffer
+//VertexBuffer
 //-----------------------------------------------------------------------------
 class VertexBuffer
 {
@@ -11,14 +11,15 @@ public:
 
 	UINT Count() { return count; }
 	UINT Stride() { return stride; }
-	ID3D11Buffer* Buffer() { return  buffer; }
+	ID3D11Buffer* Buffer() { return buffer; }
 
-	void Render();
+	void IASet();
 
 private:
 	ID3D11Buffer* buffer;
-
+	
 	void* data;
+	
 	UINT count;
 	UINT stride;
 	UINT slot;
@@ -28,7 +29,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// IndexBuffer
+//IndexBuffer
 //-----------------------------------------------------------------------------
 class IndexBuffer
 {
@@ -39,7 +40,7 @@ public:
 	UINT Count() { return count; }
 	ID3D11Buffer* Buffer() { return buffer; }
 
-	void Render();
+	void IASet();
 
 private:
 	ID3D11Buffer* buffer;
@@ -49,7 +50,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// ConstantBuffer
+//ConstantBuffer
 //-----------------------------------------------------------------------------
 class ConstantBuffer
 {
@@ -57,25 +58,26 @@ public:
 	ConstantBuffer(void* data, UINT dataSize);
 	~ConstantBuffer();
 
-	ID3D11Buffer* Buffer() { return buffer; }
+	ID3D11Buffer* Buffer() {return buffer; }
 
-	void Render();
+	void Map();
 
 private:
 	ID3D11Buffer* buffer;
 
 	void* data;
 	UINT dataSize;
+	
 };
 
 //-----------------------------------------------------------------------------
-// ComputeBuffer(Super)
+//CsResource(Super)
 //-----------------------------------------------------------------------------
-class ComputeBuffer
+class CsResource
 {
 public:
-	ComputeBuffer() = default;
-	virtual ~ComputeBuffer();
+	CsResource();
+	virtual ~CsResource();
 
 protected:
 	virtual void CreateInput() {}
@@ -99,19 +101,20 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// RawBuffer(C++), ByteAddress(HLSL)
+//RawBuffer
 //-----------------------------------------------------------------------------
-class RawBuffer : public ComputeBuffer
+class RawBuffer : public CsResource
 {
 public:
-	RawBuffer(void* inputData, UINT inputByte, UINT outputByte);
+	RawBuffer(void* data, UINT inputByte, UINT outputByte);
 	~RawBuffer();
 
+private:
 	virtual void CreateInput() override;
 	virtual void CreateSRV() override;
 
-	virtual void CreateOutput()  override;
-	virtual void CreateUAV()  override;
+	virtual void CreateOutput() override;
+	virtual void CreateUAV() override;
 
 public:
 	void CopyToInput(void* data);
@@ -124,29 +127,30 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// TextureBuffer
+//TextureBuffer
 //-----------------------------------------------------------------------------
-class TextureBuffer : public ComputeBuffer
+class TextureBuffer : public CsResource
 {
 public:
 	TextureBuffer(ID3D11Texture2D* src);
 	~TextureBuffer();
 
 private:
-	virtual void CreateSRV() override;
+	void CreateSRV() override;
 
-	virtual void CreateOutput() override;
-	virtual void CreateUAV() override;
+	void CreateOutput() override;
+	void CreateUAV() override;
 
 public:
-	void CopyToInput(ID3D11Texture2D* texture);
-	
 	UINT Width() { return width; }
 	UINT Height() { return height; }
 	UINT ArraySize() { return arraySize; }
+
+	//ID3D11Texture2D* Output() { return (ID3D11Texture2D *)output; }
 	ID3D11ShaderResourceView* OutputSRV() { return outputSRV; }
 	ID3D11Texture2D* Result() { return (ID3D11Texture2D*)output; }
 
+	void CopyToInput(ID3D11Texture2D* texture);
 	ID3D11Texture2D* CopyFromOutput();
 
 private:
@@ -158,15 +162,15 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// StructuredBuffer
+//StructuredBuffer
 //-----------------------------------------------------------------------------
-class StructuredBuffer : public ComputeBuffer
+class StructuredBuffer : public CsResource
 {
 public:
 	StructuredBuffer(void* inputData, UINT inputStride, UINT inputCount, UINT outputStride = 0, UINT outputCount = 0);
 	~StructuredBuffer();
 
-public:
+private:
 	void CreateInput() override;
 	void CreateSRV() override;
 
@@ -182,6 +186,7 @@ public:
 
 private:
 	void* inputData;
+
 	UINT inputStride;
 	UINT inputCount;
 
