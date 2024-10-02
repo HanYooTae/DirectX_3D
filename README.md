@@ -1,6 +1,6 @@
 ## Overview
 
-- Toy Project
+- DirectX11 Project
 
 - Shader 파일을 생성하여 클래스에서 동적 할당하는 방식으로 진행
 
